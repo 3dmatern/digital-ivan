@@ -1,7 +1,11 @@
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+const roboto = Roboto({
+    weight: ["400", "700"],
+    subsets: ["cyrillic", "latin"],
+    display: "swap",
+});
 
 export const metadata = {
     title: "NIKO",
@@ -11,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="ru">
-            <body className={inter.className}>{children}</body>
+            <body className={roboto.className}>{children}</body>
         </html>
     );
 }
