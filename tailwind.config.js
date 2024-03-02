@@ -11,9 +11,12 @@ module.exports = {
     theme: {
         container: {
             center: true,
-            padding: "2rem",
-            screens: {
-                "2xl": "1400px",
+            padding: {
+                DEFAULT: "1.25rem",
+                sm: "2rem",
+                lg: "4rem",
+                xl: "5rem",
+                "2xl": "7.71875rem",
             },
         },
         extend: {
@@ -39,6 +42,7 @@ module.exports = {
                 "gray-first": "#333333",
                 "gray-third": "#DDDDDD",
                 error: "#DB371F",
+                "almost-black": "#0E0E0E",
             },
         },
     },

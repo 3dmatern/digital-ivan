@@ -1,6 +1,8 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
+import { Navigate } from "@/components/navigate";
+
 const roboto = Roboto({
     weight: ["400", "700"],
     subsets: ["cyrillic", "latin"],
@@ -15,7 +17,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="ru">
-            <body className={roboto.className}>{children}</body>
+            <body className={roboto.className}>
+                <Navigate />
+
+                {children}
+            </body>
         </html>
     );
 }
