@@ -10,7 +10,7 @@ import { UiHeadingThird } from "../uikit/heading/ui-heading-third";
 export function HomeDifference() {
     return (
         <UiSectionWrapper>
-            <UiDivContainer className="gap-10">
+            <UiDivContainer className="gap-10 md:gap-16">
                 <UiHeadingSecond>
                     Чем <HighlightedTitle /> отличается от других переводчиков?
                 </UiHeadingSecond>
