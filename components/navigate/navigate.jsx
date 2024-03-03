@@ -123,6 +123,7 @@ function MenuButton({ isActive, onClick }) {
                     px-0 py-0 h-6 w-6 
                     text-white hover:text-prim-hover 
                     bg-transparent hover:bg-transparent
+                    active:bg-transparent
             `}
         >
             {isActive ? <UiCrossIcon /> : <UiMenuIcon />}
