@@ -39,6 +39,7 @@ module.exports = {
                 "prim-hover": "#218882",
                 "prim-active": "#53BAB4",
                 "background-first": "#070B22",
+                "background-second": "#0D1028",
                 "gray-first": "#333333",
                 "gray-third": "#DDDDDD",
                 error: "#DB371F",

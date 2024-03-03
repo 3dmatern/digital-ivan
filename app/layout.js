@@ -1,6 +1,8 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
+import { cn } from "@/lib/utils";
+
 import { Navigate } from "@/components/navigate";
 
 const roboto = Roboto({
@@ -17,7 +19,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="ru">
-            <body className={roboto.className}>
+            <body
+                className={cn(
+                    "pt-[60px] bg-background-second",
+                    roboto.className
+                )}
+            >
                 <Navigate />
 
                 {children}
