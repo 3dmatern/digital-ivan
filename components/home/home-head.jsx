@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiDivContainer } from "@/components/uikit/ui-div-container";
-import { UiHeadingFirst } from "@/components/uikit/ui-heading-first";
+import { UiHeadingFirst } from "@/components/uikit/heading/ui-heading-first";
 
 export function HomeHead() {
     return (
