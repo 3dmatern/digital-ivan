@@ -33,3 +33,24 @@ export const DIFFERENCES_DATA = [
             "Lorem ipsum dolor sit amet consectetur. Nisl blandit sed ut consectetur tempor facilisis pulvinar ac",
     },
 ];
+
+export const WORKS_DATA = [
+    {
+        id: 1,
+        title: "Распознает",
+        description:
+            "NIKO разпознает текст при помощи нейросети в выбранном окне",
+    },
+    {
+        id: 2,
+        title: "Переводит",
+        description:
+            "Распознанный текст отправляется на сервис перевода, где он обрабатывается и переводится на требуемый язык",
+    },
+    {
+        id: 3,
+        title: "Отображает",
+        description:
+            "Переведённый текст накладывается поверх оригинала, обеспечивая удобное чтение и понимание контента без необходимости переключения между окнами или приложениями",
+    },
+];

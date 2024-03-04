@@ -4,7 +4,7 @@ import { UiHeadingSecond } from "../uikit/heading";
 import { UiDivContainer } from "../uikit/ui-div-container";
 import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
 import { DIFFERENCES_DATA } from "./constants";
-import { DifferenceCard } from "./ui/difference-card";
+import { MainCard } from "./ui/main-card";
 import { UiHeadingThird } from "../uikit/heading/ui-heading-third";
 
 export function HomeDifference() {
@@ -16,11 +16,11 @@ export function HomeDifference() {
                 </UiHeadingSecond>
                 <HomeDifferenceBody>
                     {DIFFERENCES_DATA.map((diff) => (
-                        <DifferenceCard key={diff.id}>
-                            <DifferenceCard.Icon>
+                        <MainCard key={diff.id}>
+                            <MainCard.Icon>
                                 <Image src={diff.icon} alt={diff.title} />
-                            </DifferenceCard.Icon>
-                            <DifferenceCard.Body
+                            </MainCard.Icon>
+                            <MainCard.Body
                                 title={
                                     <UiHeadingThird>
                                         {diff.title}
@@ -28,7 +28,7 @@ export function HomeDifference() {
                                 }
                                 description={diff.description}
                             />
-                        </DifferenceCard>
+                        </MainCard>
                     ))}
                 </HomeDifferenceBody>
             </UiDivContainer>
