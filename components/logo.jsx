@@ -5,9 +5,10 @@ import { cn } from "@/lib/utils";
 
 import logoImage from "@/public/niko.svg";
 
-export function Logo({ className }) {
+export function Logo({ className, ...rest }) {
     return (
         <Link
+            {...rest}
             href="/"
             className={cn("flex items-center justify-center h-9", className)}
         >

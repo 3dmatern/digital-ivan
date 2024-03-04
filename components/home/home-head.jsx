@@ -12,7 +12,7 @@ export function HomeHead() {
                 min-[550px]:bg-[top_center] sm:bg-[length:100%]
             `}
         >
-            <UiDivContainer className="pt-[317px] px-5 pb-[52px] lg:pt-[409px] lg:pb-[78px]">
+            <UiDivContainer className="pt-[317px] pb-[52px] lg:pt-[409px] lg:pb-[78px]">
                 <UiHeadingFirst>
                     Переводи текст <br /> в играх или приложениях в реальном
                     времени

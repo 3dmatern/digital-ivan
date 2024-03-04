@@ -18,6 +18,10 @@ export function Navigate() {
         setIsActive((prev) => !prev);
     };
 
+    const handleCloseMenu = () => {
+        setIsActive((prev) => false);
+    };
+
     return (
         <UiHeader
             className={cn(
@@ -29,18 +33,27 @@ export function Navigate() {
             )}
         >
             <NavigateContainer
-                logo={<Logo text="niko" />}
+                logo={<Logo text="niko" onClick={handleCloseMenu} />}
                 links={
                     <NavigateLinks isActive={isActive}>
-                        <UiLink href="#" className={isActive && "text-2xl"}>
+                        <UiLink
+                            href="#"
+                            className={isActive && "text-2xl"}
+                            onClick={handleCloseMenu}
+                        >
                             Преимущества
                         </UiLink>
-                        <UiLink href="#" className={isActive && "text-2xl"}>
+                        <UiLink
+                            href="#"
+                            className={isActive && "text-2xl"}
+                            onClick={handleCloseMenu}
+                        >
                             Как это работает?
                         </UiLink>
                         <UiLink
                             href="/about-app"
                             className={isActive && "text-2xl"}
+                            onClick={handleCloseMenu}
                         >
                             О приложении
                         </UiLink>
@@ -51,12 +64,14 @@ export function Navigate() {
                         <UiLink
                             href="#"
                             className={cn("font-bold", isActive && "text-2xl")}
+                            onClick={handleCloseMenu}
                         >
                             Регистрация
                         </UiLink>
                         <UiLink
                             href="#"
                             className={cn("font-bold", isActive && "text-2xl")}
+                            onClick={handleCloseMenu}
                         >
                             Вход
                         </UiLink>
