@@ -38,7 +38,10 @@ export function Navigate() {
                         <UiLink href="#" className={isActive && "text-2xl"}>
                             Как это работает?
                         </UiLink>
-                        <UiLink href="#" className={isActive && "text-2xl"}>
+                        <UiLink
+                            href="/about-app"
+                            className={isActive && "text-2xl"}
+                        >
                             О приложении
                         </UiLink>
                     </NavigateLinks>

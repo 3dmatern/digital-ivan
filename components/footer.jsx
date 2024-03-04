@@ -23,7 +23,7 @@ export function FooterContainer({ logo, privacy, rights }) {
     return (
         <div
             className={`
-                container py-14 px-5 flex flex-col gap-4 relative
+                container py-14 flex flex-col gap-4 relative
                 md:flex-row md:items-center md:justify-between
                 md:py-4
             `}
