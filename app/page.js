@@ -1,5 +1,9 @@
-import { HomeHead, HomeDifference } from "@/components/home";
-import { HomeWork } from "@/components/home/home-work";
+import {
+    HomeHead,
+    HomeDifference,
+    HomeWork,
+    HomeFree,
+} from "@/components/home";
 
 export default function HomePage() {
     return (
@@ -8,6 +12,7 @@ export default function HomePage() {
             <HomeHead />
             <HomeDifference />
             <HomeWork />
+            <HomeFree />
         </main>
     );
 }
