@@ -7,14 +7,13 @@ export function HomeFree() {
     return (
         <UiSectionWrapper
             className={`
-                
                 bg-[linear-gradient(to_bottom,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.png')]
-                md:bg-[linear-gradient(to_left,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.png')]
                 bg-no-repeat bg-[top_left_-23.5rem] bg-[length:1200px]
-                md:bg-[top_left_0rem] md:bg-[length:100%] 
+                md:bg-[linear-gradient(to_left,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.png')]
+                md:bg-right-top xl:bg-[length:100%]
             `}
         >
-            <UiDivContainer className="gap-6 pt-[549px] pb-[54px] md:pt-[207px] md:pb-[207px] lg:gap-10 lg:pt-[207px] lg:pb-[207px]">
+            <UiDivContainer className="gap-6 pt-[549px] pb-[54px] lg:gap-10 lg:pt-[207px] lg:pb-[207px]">
                 <HomeFreeBody
                     title={
                         <UiHeadingSecond>
@@ -36,7 +35,7 @@ function HomeFreeBody({ title, description }) {
     return (
         <div className="max-w-[553px] flex flex-col gap-4 lg:gap-8">
             {title}
-            <p className="md:text-2xl md:leading-9 text-gray-third">
+            <p className="lg:text-2xl lg:leading-9 text-gray-third">
                 {description}
             </p>
         </div>
