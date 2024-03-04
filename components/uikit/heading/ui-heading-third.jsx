@@ -6,7 +6,7 @@ export function UiHeadingThird({ className, children }) {
             className={cn(
                 `
                     text-xl text-white font-bold
-                    md:text-2xl
+                    lg:text-2xl
                 `,
                 className
             )}

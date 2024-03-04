@@ -73,7 +73,7 @@ function WorkListContainer({ className, children }) {
         <ul
             className={cn(
                 `
-                    max-w-[34.3125rem] flex flex-col gap-8 text-white pl-16 md:pl-20
+                    flex flex-col gap-8 text-white pl-16 md:pl-20
                 `,
                 className
             )}
