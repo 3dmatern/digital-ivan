@@ -10,7 +10,7 @@ import { UiHeadingSecond } from "@/components/uikit/heading";
 
 export function HomeWork() {
     return (
-        <UiSectionWrapper>
+        <UiSectionWrapper className="bg-background-first">
             <UiDivContainer className="justify-center pt-[4.5rem] pb-[4.5rem] md:flex-row lg:gap-20">
                 <UiImage src={workImage} alt="work" />
                 <HomeWorkBody>
