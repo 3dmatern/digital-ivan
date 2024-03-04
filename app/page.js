@@ -4,6 +4,7 @@ import {
     HomeWork,
     HomeFree,
 } from "@/components/home";
+import { Footer } from "@/components/footer";
 
 export default function HomePage() {
     return (
@@ -13,6 +14,7 @@ export default function HomePage() {
             <HomeDifference />
             <HomeWork />
             <HomeFree />
+            <Footer />
         </main>
     );
 }

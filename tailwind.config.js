@@ -41,6 +41,7 @@ module.exports = {
                 "background-first": "#070B22",
                 "background-second": "#0D1028",
                 "gray-first": "#333333",
+                "gray-second": "#828282",
                 "gray-third": "#DDDDDD",
                 error: "#DB371F",
                 "almost-black": "#0E0E0E",
