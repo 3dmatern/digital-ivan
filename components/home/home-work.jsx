@@ -11,7 +11,7 @@ import { UiHeadingSecond } from "@/components/uikit/heading";
 export function HomeWork() {
     return (
         <UiSectionWrapper>
-            <UiDivContainer className="md:flex-row">
+            <UiDivContainer className="justify-center pt-[4.5rem] pb-[4.5rem] md:flex-row lg:gap-20">
                 <UiImage src={workImage} alt="work" />
                 <HomeWorkBody>
                     <UiHeadingSecond className="md:max-w-full md:text-3xl lg:text-4xl xl:text-5xl">

@@ -90,7 +90,7 @@ function WorkListItem({ variant, number, children }) {
                 `
                     relative z-0
                     before:content-[''] before:block before:w-1 before:h-full before:bg-prim 
-                    before:absolute before:-left-[2.875rem]
+                    before:absolute before:-left-[2.875rem] before:md:-left-[3.875rem]
                 `,
                 {
                     first: "before:top-1/2",
@@ -103,7 +103,7 @@ function WorkListItem({ variant, number, children }) {
                 className="text-2xl font-bold flex 
                     items-center justify-center size-10 rounded-full
                     bg-prim absolute top-1/2 -translate-y-1/2 
-                    -left-[4rem]"
+                    -left-[4rem] md:-left-[5rem]"
             >
                 {number}
             </span>
