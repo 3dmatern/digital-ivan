@@ -1,3 +1,4 @@
+import { AboutHead, AboutModes } from "@/components/about";
 import { UiMainContainer } from "@/components/uikit/ui-main-container";
 
 export const metadata = {
@@ -6,5 +7,10 @@ export const metadata = {
 };
 
 export default function AboutAppPage() {
-    return <UiMainContainer>AboutAppPage</UiMainContainer>;
+    return (
+        <UiMainContainer>
+            <AboutHead />
+            <AboutModes />
+        </UiMainContainer>
+    );
 }
