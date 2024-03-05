@@ -1,5 +1,5 @@
-import { AboutHead, AboutModes } from "@/components/about";
 import { UiMainContainer } from "@/components/uikit/ui-main-container";
+import { AboutHead, AboutModes, AboutSubscribe } from "@/components/about";
 
 export const metadata = {
     title: "NIKO | О приложении",
@@ -11,6 +11,7 @@ export default function AboutAppPage() {
         <UiMainContainer>
             <AboutHead />
             <AboutModes />
+            <AboutSubscribe />
         </UiMainContainer>
     );
 }
