@@ -13,6 +13,7 @@ import { UiHeadingFourth } from "@/components/uikit/heading";
 import { Button } from "@/components/ui/button";
 import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
 import { UiDivContainer } from "../uikit/ui-div-container";
+import Link from "next/link";
 
 export function PaymentCarousel() {
     return (
@@ -35,6 +36,14 @@ export function PaymentCarousel() {
                         ))}
                     </CarouselContent>
                 </Carousel>
+                <Button
+                    asChild
+                    className="max-w-[410px] w-full mx-auto mt-[30px] mb-[120px]"
+                >
+                    <Link href="#" target="_blank">
+                        Оплатить
+                    </Link>
+                </Button>
             </UiDivContainer>
         </UiSectionWrapper>
     );
