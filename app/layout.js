@@ -29,6 +29,7 @@ export default function RootLayout({ children }) {
                 <Navigate />
                 {children}
                 <Footer />
+                <div id="modals" />
             </body>
         </html>
     );

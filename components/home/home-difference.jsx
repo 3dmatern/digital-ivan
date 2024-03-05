@@ -41,5 +41,5 @@ function HighlightedTitle() {
 }
 
 function HomeDifferenceBody({ children }) {
-    return <div className="flex flex-wrap gap-8">{children}</div>;
+    return <div className="flex flex-wrap gap-8 md:gap-[30px]">{children}</div>;
 }
