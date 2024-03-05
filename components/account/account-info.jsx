@@ -48,7 +48,7 @@ function AccountInfoUser({ currentUser }) {
             </div>
 
             <Button asChild>
-                <Link href="#" target="_blank" className="w-max">
+                <Link href="/payment" className="w-max">
                     Продлить подписку
                 </Link>
             </Button>
