@@ -5,7 +5,7 @@ import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
 export function PaymentHead() {
     return (
         <UiSectionWrapper>
-            <UiDivContainer className="px-[18px]">
+            <UiDivContainer className="px-[18px] lg:pt-[120px] lg:pb-0">
                 <PaymentHeadContainer
                     title={
                         <UiHeadingFirst className="max-w-full sm:max-w-full md:max-w-full">
