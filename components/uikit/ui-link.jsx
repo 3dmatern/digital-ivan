@@ -14,7 +14,7 @@ export function UiLink({
             {...rest}
             href={href}
             className={cn(
-                "text-sm leading-[21px]  transition-colors",
+                "text-sm leading-[21px] transition-colors",
                 {
                     default: "text-white hover:text-prim",
                     reverse: "text-prim hover:text-white",

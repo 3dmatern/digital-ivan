@@ -10,8 +10,9 @@ import { UiLink } from "@/components/uikit/ui-link";
 import { Button } from "@/components/ui/button";
 import { UiMenuIcon } from "@/components/uikit/icons/ui-menu-icon";
 import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
+import { NavigateAuth } from "./ui/navigate-auth";
 
-export function Navigate() {
+export function Navigate({ isAuth = true }) {
     const [isActive, setIsActive] = useState(false);
 
     const handleOpenMenu = () => {
@@ -27,7 +28,7 @@ export function Navigate() {
             className={cn(
                 `
                     w-full flex items-center
-                    absolute top-0 left-0
+                    absolute top-0 left-0 z-10
                 `,
                 isActive && `h-screen`
             )}
@@ -61,20 +62,11 @@ export function Navigate() {
                 }
                 auth={
                     <AuthLinks isActive={isActive}>
-                        <UiLink
-                            href="#"
-                            className={cn("font-bold", isActive && "text-2xl")}
+                        <NavigateAuth
+                            isAuth={isAuth}
+                            isActive={isActive}
                             onClick={handleCloseMenu}
-                        >
-                            Регистрация
-                        </UiLink>
-                        <UiLink
-                            href="#"
-                            className={cn("font-bold", isActive && "text-2xl")}
-                            onClick={handleCloseMenu}
-                        >
-                            Вход
-                        </UiLink>
+                        />
                     </AuthLinks>
                 }
                 menu={
