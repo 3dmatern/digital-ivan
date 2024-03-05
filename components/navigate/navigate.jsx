@@ -10,9 +10,9 @@ import { UiLink } from "@/components/uikit/ui-link";
 import { Button } from "@/components/ui/button";
 import { UiMenuIcon } from "@/components/uikit/icons/ui-menu-icon";
 import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
-import { NavigateAuth } from "./ui/navigate-auth";
+import { NavigateAuth } from "@/components/navigate/ui/navigate-auth";
 
-export function Navigate({ isAuth = true }) {
+export function Navigate({ isAuth }) {
     const [isActive, setIsActive] = useState(false);
 
     const handleOpenMenu = () => {
@@ -65,7 +65,7 @@ export function Navigate({ isAuth = true }) {
                         <NavigateAuth
                             isAuth={isAuth}
                             isActive={isActive}
-                            onClick={handleCloseMenu}
+                            onCloseMenu={handleCloseMenu}
                         />
                     </AuthLinks>
                 }
