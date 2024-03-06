@@ -65,7 +65,7 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
                         type="email"
                         isPending={isPending}
                         placeholder="jhon.doe@example.com"
-                        error={error}
+                        error={form.formState.errors["email"]}
                     />
 
                     <InputField
@@ -74,7 +74,7 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
                         label="Введите имя пользователя"
                         type="text"
                         isPending={isPending}
-                        error={error}
+                        error={form.formState.errors["nickname"]}
                     />
 
                     <InputField
@@ -83,7 +83,7 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
                         label="Введите пароль"
                         type="password"
                         isPending={isPending}
-                        error={error}
+                        error={form.formState.errors["password"]}
                     />
 
                     <InputField
@@ -92,7 +92,7 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
                         label="Подтвердите пароль"
                         type="password"
                         isPending={isPending}
-                        error={error}
+                        error={form.formState.errors["confirmPassword"]}
                     />
 
                     <FormSuccess message={success} />

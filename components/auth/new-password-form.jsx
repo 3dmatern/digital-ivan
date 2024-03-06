@@ -60,7 +60,7 @@ export function NewPasswordForm({
                         label="Введите пароль"
                         type="password"
                         isPending={isPending}
-                        error={error}
+                        error={form.formState.errors["password"]}
                     />
 
                     <InputField
@@ -69,7 +69,7 @@ export function NewPasswordForm({
                         label="Подтвердите пароль"
                         type="password"
                         isPending={isPending}
-                        error={error}
+                        error={form.formState.errors["confirmPassword"]}
                     />
 
                     <FormSuccess message={success} />

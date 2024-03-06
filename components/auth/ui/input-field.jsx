@@ -94,13 +94,12 @@ export function InputField({
                         {error && (
                             <UiDangerIcon className="absolute top-1/2 -translate-y-1/2 right-4 text-error" />
                         )}
-                        {}
                     </InputFieldContainer>
-                    {forgotPassword}
                     <FormMessage
                         style={{ marginTop: "4px" }}
                         className="text-xs text-error leading-[18px]"
                     />
+                    {forgotPassword}
                 </FormItem>
             )}
         />

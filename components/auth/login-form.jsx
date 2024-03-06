@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
-import Link from "next/link";
 
 import { LoginSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
@@ -68,7 +67,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                         type="email"
                         isPending={isPending}
                         placeholder="jhon.doe@example.com"
-                        error={error}
+                        error={form.formState.errors["email"]}
                     />
 
                     <InputField
@@ -90,7 +89,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                                 Забыли пароль?
                             </Button>
                         }
-                        error={error}
+                        error={form.formState.errors["password"]}
                     />
                     <FormSuccess message={success} />
                     <FormError message={error} />

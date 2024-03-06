@@ -60,7 +60,7 @@ export function ResetForm({ onClickBackButton, onCloseModal }) {
                         type="email"
                         isPending={isPending}
                         placeholder="jhon.doe@example.com"
-                        error={error}
+                        error={form.formState.errors["email"]}
                     />
 
                     <FormSuccess message={success} />
