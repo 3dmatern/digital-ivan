@@ -24,7 +24,7 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
             email: "",
-            nickname: "",
+            username: "",
             password: "",
             confirmPassword: "",
         },
@@ -70,11 +70,11 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
 
                     <InputField
                         form={form}
-                        name="nickname"
+                        name="username"
                         label="Введите имя пользователя"
                         type="text"
                         isPending={isPending}
-                        error={form.formState.errors["nickname"]}
+                        error={form.formState.errors["username"]}
                     />
 
                     <InputField

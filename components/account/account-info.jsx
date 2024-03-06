@@ -14,7 +14,7 @@ export function AccountInfo({}) {
                 <AccountInfoBody>
                     <AccountInfoUser
                         currentUser={{
-                            nickname: "nickname",
+                            username: "username",
                             subscription: Date.now(),
                         }}
                     />
@@ -38,7 +38,7 @@ function AccountInfoUser({ currentUser }) {
     return (
         <div className=" flex flex-col gap-6 text-white">
             <div className="flex flex-col gap-2">
-                <UiHeadingFourth>User: {currentUser.nickname}</UiHeadingFourth>
+                <UiHeadingFourth>User: {currentUser.username}</UiHeadingFourth>
                 <p className="text-gray-third">
                     Дата окончания подписки:{" "}
                     <span className="text-prim">

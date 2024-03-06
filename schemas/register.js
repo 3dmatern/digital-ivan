@@ -5,7 +5,7 @@ export const RegisterSchema = z
         email: z.string().email({
             message: "Email обязателен",
         }),
-        nickname: z.string().trim().min(3, { message: "Минимум из трёх букв" }),
+        username: z.string().trim().min(3, { message: "Минимум из трёх букв" }),
         password: z.string().trim().min(6, {
             message: "Минимум 6 смиволов.",
         }),
