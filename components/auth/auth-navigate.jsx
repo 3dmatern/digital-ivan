@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-
 import { cn } from "@/lib/utils";
 
 import { UiLink } from "@/components/uikit/ui-link";
@@ -11,89 +8,55 @@ import { RegisterForm } from "@/components/auth/register-form";
 import { LoginForm } from "@/components/auth/login-form";
 import { NewVerificationForm } from "@/components/auth/new-verification-form";
 import { ResetForm } from "@/components/auth/reset-form";
-import { NewPasswordForm } from "./new-password-form";
+import { NewPasswordForm } from "@/components/auth/new-password-form";
 
-export function AuthNavigate({ isAuth, isActive, onCloseMenu }) {
-    const searchParams = useSearchParams();
-    const verifiedToken = searchParams.get("verified");
-    const resetToken = searchParams.get("reset");
-
-    const [isModal, setIsModal] = useState({
-        isOpen: false,
-        typeForm: "",
-    });
-
-    useEffect(() => {
-        if (verifiedToken) {
-            setIsModal((prev) => ({
-                ...prev,
-                isOpen: true,
-                typeForm: "verified",
-            }));
-        }
-        if (resetToken) {
-            setIsModal((prev) => ({
-                ...prev,
-                isOpen: true,
-                typeForm: "reset",
-            }));
-        }
-    }, [verifiedToken, resetToken]);
-
-    const handleOpenModal = (type) => {
-        setIsModal((prev) => ({ ...prev, isOpen: true, typeForm: type }));
-        onCloseMenu();
-    };
-
-    const handleSwitchModal = (type) => {
-        setIsModal((prev) => ({ ...prev, isOpen: true, typeForm: type }));
-    };
-
-    const handleCloseModal = () => {
-        setIsModal((prev) => ({
-            ...prev,
-            isOpen: false,
-            typeForm: "",
-        }));
-    };
-
+export function AuthNavigate({
+    isAuth,
+    isActive,
+    typeForm,
+    isOpen,
+    onOpenModal,
+    onSwitchModal,
+    onCloseModal,
+    onCloseMenu,
+}) {
     const getContentModal = () => {
-        switch (isModal.typeForm) {
+        switch (typeForm) {
             case "register":
                 return (
                     <RegisterForm
-                        onClickBackButton={handleSwitchModal}
-                        onCloseModal={handleCloseModal}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
                     />
                 );
             case "login":
                 return (
                     <LoginForm
-                        onClickBackButton={handleSwitchModal}
-                        onCloseModal={handleCloseModal}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
                     />
                 );
             case "verified":
                 return (
                     <NewVerificationForm
                         verifiedToken={verifiedToken}
-                        onClickBackButton={handleSwitchModal}
-                        onCloseModal={handleCloseModal}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
                     />
                 );
             case "resetPassword":
                 return (
                     <ResetForm
-                        onClickBackButton={handleSwitchModal}
-                        onCloseModal={handleCloseModal}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
                     />
                 );
             case "reset":
                 return (
                     <NewPasswordForm
                         resetToken={resetToken}
-                        onClickBackButton={handleSwitchModal}
-                        onCloseModal={handleCloseModal}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
                     />
                 );
             default:
@@ -103,7 +66,7 @@ export function AuthNavigate({ isAuth, isActive, onCloseMenu }) {
 
     return (
         <>
-            <UiModal isOpen={isModal.isOpen} onClose={handleCloseModal}>
+            <UiModal isOpen={isOpen} onClose={onCloseModal}>
                 {getContentModal()}
             </UiModal>
 
@@ -129,14 +92,20 @@ export function AuthNavigate({ isAuth, isActive, onCloseMenu }) {
                     <UiLink
                         href="#"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={() => handleOpenModal("register")}
+                        onClick={() => {
+                            onOpenModal("register");
+                            onCloseMenu();
+                        }}
                     >
                         Регистрация
                     </UiLink>
                     <UiLink
                         href="#"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={() => handleOpenModal("login")}
+                        onClick={() => {
+                            onOpenModal("login");
+                            onCloseMenu();
+                        }}
                     >
                         Вход
                     </UiLink>

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useContext } from "react";
 
 import { cn } from "@/lib/utils";
+
+import { ProvidersContext } from "@/app/providers";
 
 import { UiHeader } from "@/components/uikit/ui-header";
 import { Logo } from "@/components/logo";
@@ -12,49 +14,51 @@ import { UiMenuIcon } from "@/components/uikit/icons/ui-menu-icon";
 import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
 import { AuthNavigate } from "@/components/auth/auth-navigate";
 
-export function Navigate({ isAuth }) {
-    const [isActive, setIsActive] = useState(false);
-
-    const handleOpenMenu = () => {
-        setIsActive((prev) => !prev);
-    };
-
-    const handleCloseMenu = () => {
-        setIsActive((prev) => false);
-    };
+export function Navigate() {
+    let {
+        isAuth,
+        isActive,
+        typeForm,
+        isOpen,
+        onOpenModal,
+        onSwitchModal,
+        onCloseModal,
+        onOpenMenu,
+        onCloseMenu,
+    } = useContext(ProvidersContext);
 
     return (
         <UiHeader
             className={cn(
                 `
-                    w-full flex items-center
-                    absolute top-0 left-0 z-10
-                `,
+            w-full flex items-center
+            absolute top-0 left-0 z-10
+        `,
                 isActive && `h-screen`
             )}
         >
             <NavigateContainer
-                logo={<Logo text="niko" onClick={handleCloseMenu} />}
+                logo={<Logo text="niko" onClick={onCloseMenu} />}
                 links={
                     <NavigateLinks isActive={isActive}>
                         <UiLink
                             href="#"
                             className={isActive && "text-2xl"}
-                            onClick={handleCloseMenu}
+                            onClick={onCloseMenu}
                         >
                             Преимущества
                         </UiLink>
                         <UiLink
                             href="#"
                             className={isActive && "text-2xl"}
-                            onClick={handleCloseMenu}
+                            onClick={onCloseMenu}
                         >
                             Как это работает?
                         </UiLink>
                         <UiLink
                             href="/about-app"
                             className={isActive && "text-2xl"}
-                            onClick={handleCloseMenu}
+                            onClick={onCloseMenu}
                         >
                             О приложении
                         </UiLink>
@@ -65,13 +69,16 @@ export function Navigate({ isAuth }) {
                         <AuthNavigate
                             isAuth={isAuth}
                             isActive={isActive}
-                            onCloseMenu={handleCloseMenu}
+                            typeForm={typeForm}
+                            isOpen={isOpen}
+                            onOpenModal={onOpenModal}
+                            onSwitchModal={onSwitchModal}
+                            onCloseModal={onCloseModal}
+                            onCloseMenu={onCloseMenu}
                         />
                     </AuthLinks>
                 }
-                menu={
-                    <MenuButton isActive={isActive} onClick={handleOpenMenu} />
-                }
+                menu={<MenuButton isActive={isActive} onClick={onOpenMenu} />}
                 className={cn("", isActive && `h-screen items-start `)}
             />
         </UiHeader>

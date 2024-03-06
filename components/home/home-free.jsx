@@ -3,7 +3,7 @@ import { UiHeadingSecond } from "../uikit/heading";
 import { UiDivContainer } from "../uikit/ui-div-container";
 import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
 
-export function HomeFree() {
+export function HomeFree({ onOpenModal }) {
     return (
         <UiSectionWrapper
             className={`
@@ -23,7 +23,11 @@ export function HomeFree() {
                     description="Зарегистрируйся и получи 2 дня подписки абсолютно
                         бесплатно"
                 />
-                <Button type="button" className="w-max">
+                <Button
+                    type="button"
+                    onClick={() => onOpenModal("register")}
+                    className="w-max"
+                >
                     Регистрация
                 </Button>
             </UiDivContainer>
