@@ -3,33 +3,27 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
-import Link from "next/link";
 
-import { LoginSchema } from "@/schemas";
+import { reset } from "@/actions/reset";
+
+import { ResetSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
+import { InputField } from "@/components/auth/ui/input-field";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
-import { login } from "@/actions/login";
-import { InputField } from "./ui/input-field";
 
-export function LoginForm({ onClickBackButton, onCloseModal }) {
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl");
-
+export function ResetForm({ onClickBackButton, onCloseModal }) {
     const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
-
     const form = useForm({
-        resolver: zodResolver(LoginSchema),
+        resolver: zodResolver(ResetSchema),
         defaultValues: {
             email: "",
-            password: "",
         },
     });
 
@@ -39,11 +33,9 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
             setError("");
 
             startTransition(() => {
-                login(values, callbackUrl).then((data) => {
-                    if (data) {
-                        setError(data.error);
-                        setSuccess(data.success);
-                    }
+                reset(values).then((data) => {
+                    setError(data.error);
+                    setSuccess(data.success);
                 });
             });
         }
@@ -51,9 +43,9 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
 
     return (
         <CardWrapper
-            headerLabel="Вход"
-            backButtonLabel="Ещё нет аккаунта?"
-            onClickBackButton={() => onClickBackButton("register")}
+            headerLabel="Забыли свой пароль?"
+            backButtonLabel="Вход"
+            onClickBackButton={() => onClickBackButton("login")}
             onCloseModal={onCloseModal}
         >
             <Form {...form}>
@@ -71,27 +63,6 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                         error={error}
                     />
 
-                    <InputField
-                        form={form}
-                        name="password"
-                        label="Введите пароль"
-                        type="password"
-                        isPending={isPending}
-                        placeholder="******"
-                        forgotPassword={
-                            <Button
-                                size="sm"
-                                variant="link"
-                                onClick={() =>
-                                    onClickBackButton("resetPassword")
-                                }
-                                className="px-0 font-normal"
-                            >
-                                Забыли пароль?
-                            </Button>
-                        }
-                        error={error}
-                    />
                     <FormSuccess message={success} />
                     <FormError message={error} />
                     <ReCAPTCHA
@@ -104,7 +75,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                         disabled={isPending}
                         className="w-full"
                     >
-                        Войти
+                        Сбросить пароль
                     </Button>
                 </form>
             </Form>

@@ -10,7 +10,7 @@ import { UiLink } from "@/components/uikit/ui-link";
 import { Button } from "@/components/ui/button";
 import { UiMenuIcon } from "@/components/uikit/icons/ui-menu-icon";
 import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
-import { NavigateAuth } from "@/components/navigate/navigate-auth";
+import { AuthNavigate } from "@/components/auth/auth-navigate";
 
 export function Navigate({ isAuth }) {
     const [isActive, setIsActive] = useState(false);
@@ -62,7 +62,7 @@ export function Navigate({ isAuth }) {
                 }
                 auth={
                     <AuthLinks isActive={isActive}>
-                        <NavigateAuth
+                        <AuthNavigate
                             isAuth={isAuth}
                             isActive={isActive}
                             onCloseMenu={handleCloseMenu}

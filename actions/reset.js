@@ -1,9 +1,6 @@
-"use server";
+"use client";
 
 import { ResetSchema } from "@/schemas";
-import { getUserByEmail } from "@/data/user";
-import { generatePasswordResetToken } from "@/lib/tokens";
-import { sendPasswordResetBegetSMTP } from "@/lib/mailBegetSMTP";
 
 export const reset = async (values) => {
     const validatedFields = ResetSchema.safeParse(values);
@@ -16,23 +13,8 @@ export const reset = async (values) => {
 
     const { email } = validatedFields.data;
 
-    const existingUser = await getUserByEmail(email);
-
-    if (!existingUser) {
-        return {
-            error: "Email не существует!",
-        };
-    }
-
-    const passwordResetToken = await generatePasswordResetToken(email);
-
-    const response = await sendPasswordResetBegetSMTP(
-        passwordResetToken.email,
-        passwordResetToken.token
-    );
-
-    if (response) {
-        return response;
+    if (email) {
+        return email;
     }
 
     return {

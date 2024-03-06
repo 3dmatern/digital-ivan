@@ -8,19 +8,23 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function NewVerificationForm({ token, onSwitchModal, onCloseModal }) {
+export function NewVerificationForm({
+    verifiedToken,
+    onClickBackButton,
+    onCloseModal,
+}) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
     const onSubmit = useCallback(() => {
         if (success || error) return;
 
-        if (!token) {
+        if (!verifiedToken) {
             setError("Отсутствует токен!");
             return;
         }
 
-        newVerification(token)
+        newVerification(verifiedToken)
             .then((data) => {
                 setSuccess(data.success);
                 setError(data.error);
@@ -28,7 +32,7 @@ export function NewVerificationForm({ token, onSwitchModal, onCloseModal }) {
             .catch(() => {
                 setError("Что-то пошло не так!");
             });
-    }, [error, success, token]);
+    }, [error, success, verifiedToken]);
 
     useEffect(() => {
         onSubmit();
@@ -38,7 +42,7 @@ export function NewVerificationForm({ token, onSwitchModal, onCloseModal }) {
         <CardWrapper
             headerLabel="Подтверждение Email"
             backButtonLabel="Вход"
-            onClickBackButton={() => onSwitchModal("login")}
+            onClickBackButton={() => onClickBackButton("login")}
             onCloseModal={onCloseModal}
         >
             <div className="flex items-center justify-center w-full">

@@ -9,11 +9,14 @@ import { UiLink } from "@/components/uikit/ui-link";
 import { UiModal } from "@/components/uikit/ui-modal";
 import { RegisterForm } from "@/components/auth/register-form";
 import { LoginForm } from "@/components/auth/login-form";
-import { NewVerificationForm } from "../auth/new-verification-form";
+import { NewVerificationForm } from "@/components/auth/new-verification-form";
+import { ResetForm } from "@/components/auth/reset-form";
+import { NewPasswordForm } from "./new-password-form";
 
-export function NavigateAuth({ isAuth, isActive, onCloseMenu }) {
+export function AuthNavigate({ isAuth, isActive, onCloseMenu }) {
     const searchParams = useSearchParams();
-    const token = searchParams.get("token");
+    const verifiedToken = searchParams.get("verified");
+    const resetToken = searchParams.get("reset");
 
     const [isModal, setIsModal] = useState({
         isOpen: false,
@@ -21,14 +24,21 @@ export function NavigateAuth({ isAuth, isActive, onCloseMenu }) {
     });
 
     useEffect(() => {
-        if (token) {
+        if (verifiedToken) {
             setIsModal((prev) => ({
                 ...prev,
                 isOpen: true,
                 typeForm: "verified",
             }));
         }
-    }, [token]);
+        if (resetToken) {
+            setIsModal((prev) => ({
+                ...prev,
+                isOpen: true,
+                typeForm: "reset",
+            }));
+        }
+    }, [verifiedToken, resetToken]);
 
     const handleOpenModal = (type) => {
         setIsModal((prev) => ({ ...prev, isOpen: true, typeForm: type }));
@@ -52,22 +62,37 @@ export function NavigateAuth({ isAuth, isActive, onCloseMenu }) {
             case "register":
                 return (
                     <RegisterForm
-                        onSwitchModal={handleSwitchModal}
+                        onClickBackButton={handleSwitchModal}
                         onCloseModal={handleCloseModal}
                     />
                 );
             case "login":
                 return (
                     <LoginForm
-                        onSwitchModal={handleSwitchModal}
+                        onClickBackButton={handleSwitchModal}
                         onCloseModal={handleCloseModal}
                     />
                 );
             case "verified":
                 return (
                     <NewVerificationForm
-                        token={token}
-                        onSwitchModal={handleSwitchModal}
+                        verifiedToken={verifiedToken}
+                        onClickBackButton={handleSwitchModal}
+                        onCloseModal={handleCloseModal}
+                    />
+                );
+            case "resetPassword":
+                return (
+                    <ResetForm
+                        onClickBackButton={handleSwitchModal}
+                        onCloseModal={handleCloseModal}
+                    />
+                );
+            case "reset":
+                return (
+                    <NewPasswordForm
+                        resetToken={resetToken}
+                        onClickBackButton={handleSwitchModal}
                         onCloseModal={handleCloseModal}
                     />
                 );
