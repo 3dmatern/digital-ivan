@@ -24,6 +24,7 @@ export function RegisterForm({ onSwitchModal, onCloseModal }) {
             email: "",
             nickname: "",
             password: "",
+            confirmPassword: "",
         },
     });
 
@@ -81,6 +82,15 @@ export function RegisterForm({ onSwitchModal, onCloseModal }) {
                         error={error}
                     />
 
+                    <InputField
+                        form={form}
+                        name="confirmPassword"
+                        label="Подтвердите пароль"
+                        type="password"
+                        isPending={isPending}
+                        error={error}
+                    />
+
                     <FormSuccess message={success} />
                     <FormError message={error} />
                     <Button
@@ -88,7 +98,7 @@ export function RegisterForm({ onSwitchModal, onCloseModal }) {
                         disabled={isPending}
                         className="w-full"
                     >
-                        Создать аккаунт
+                        Регистрация
                     </Button>
                 </form>
             </Form>
