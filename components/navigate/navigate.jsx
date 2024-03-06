@@ -1,10 +1,8 @@
 "use client";
 
-import { useContext } from "react";
-
 import { cn } from "@/lib/utils";
 
-import { ProvidersContext } from "@/app/providers";
+import { useAuthNavigate } from "@/hooks/use-auth-navigate";
 
 import { UiHeader } from "@/components/uikit/ui-header";
 import { Logo } from "@/components/logo";
@@ -20,12 +18,12 @@ export function Navigate() {
         isActive,
         typeForm,
         isOpen,
+        onOpenMenu,
+        onCloseMenu,
         onOpenModal,
         onSwitchModal,
         onCloseModal,
-        onOpenMenu,
-        onCloseMenu,
-    } = useContext(ProvidersContext);
+    } = useAuthNavigate();
 
     return (
         <UiHeader

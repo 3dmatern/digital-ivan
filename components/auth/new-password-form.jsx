@@ -3,6 +3,9 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
+
+import { useAuthNavigate } from "@/hooks/use-auth-navigate";
 
 import { NewPasswordSchema } from "@/schemas";
 import { newPassword } from "@/actions/new-password";
@@ -14,11 +17,12 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function NewPasswordForm({
-    resetToken,
-    onClickBackButton,
-    onCloseModal,
-}) {
+export function NewPasswordForm() {
+    const searchParams = useSearchParams();
+    const resetToken = searchParams.get("reset");
+    console.log(resetToken);
+    const { onOpenModal, onSwitchModal, onCloseModal } = useAuthNavigate();
+
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -29,6 +33,12 @@ export function NewPasswordForm({
             confirmPassword: "",
         },
     });
+
+    useEffect(() => {
+        if (resetToken) {
+            onOpenModal("reset");
+        }
+    }, [onOpenModal, resetToken]);
 
     const onSubmit = (values) => {
         setSuccess("");
@@ -46,7 +56,7 @@ export function NewPasswordForm({
         <CardWrapper
             headerLabel="Введите новый пароль"
             backButtonLabel="Вход"
-            onClickBackButton={() => onClickBackButton("login")}
+            onClickBackButton={() => onSwitchModal("login")}
             onCloseModal={onCloseModal}
         >
             <Form {...form}>

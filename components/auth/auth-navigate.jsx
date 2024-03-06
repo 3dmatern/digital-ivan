@@ -37,13 +37,7 @@ export function AuthNavigate({
                     />
                 );
             case "verified":
-                return (
-                    <NewVerificationForm
-                        verifiedToken={verifiedToken}
-                        onClickBackButton={onSwitchModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <NewVerificationForm />;
             case "resetPassword":
                 return (
                     <ResetForm
@@ -52,13 +46,7 @@ export function AuthNavigate({
                     />
                 );
             case "reset":
-                return (
-                    <NewPasswordForm
-                        resetToken={resetToken}
-                        onClickBackButton={onSwitchModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <NewPasswordForm />;
             default:
                 return;
         }

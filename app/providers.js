@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { createContext } from "react";
 
 import { useAuthNavigate } from "@/hooks/use-auth-navigate";
@@ -8,9 +7,6 @@ import { useAuthNavigate } from "@/hooks/use-auth-navigate";
 export const ProvidersContext = createContext();
 
 export function Providers({ children }) {
-    const searchParams = useSearchParams();
-    const verifiedToken = searchParams.get("verified");
-    const resetToken = searchParams.get("reset");
     const {
         isActive,
         typeForm,
@@ -20,14 +16,12 @@ export function Providers({ children }) {
         onCloseModal,
         onOpenMenu,
         onCloseMenu,
-    } = useAuthNavigate({ verifiedToken, resetToken });
+    } = useAuthNavigate();
 
     return (
         <ProvidersContext.Provider
             value={{
                 isAuth: false,
-                verifiedToken,
-                resetToken,
                 isActive,
                 typeForm,
                 isOpen,

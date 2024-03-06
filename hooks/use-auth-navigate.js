@@ -1,30 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
-export function useAuthNavigate({ verifiedToken, resetToken }) {
+export function useAuthNavigate() {
     const [isActive, setIsActive] = useState(false);
     const [isModal, setIsModal] = useState({
         isOpen: false,
         typeForm: "",
     });
-
-    useEffect(() => {
-        if (verifiedToken) {
-            setIsModal((prev) => ({
-                ...prev,
-                isOpen: true,
-                typeForm: "verified",
-            }));
-        }
-        if (resetToken) {
-            setIsModal((prev) => ({
-                ...prev,
-                isOpen: true,
-                typeForm: "reset",
-            }));
-        }
-    }, [verifiedToken, resetToken]);
 
     const handleOpenMenu = () => {
         setIsActive((prev) => !prev);
@@ -51,6 +34,7 @@ export function useAuthNavigate({ verifiedToken, resetToken }) {
     };
 
     return {
+        isAuth: false,
         isActive,
         typeForm: isModal.typeForm,
         isOpen: isModal.isOpen,

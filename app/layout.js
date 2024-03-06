@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 
 import { Navigate } from "@/components/navigate";
 import { Footer } from "@/components/footer";
-import { Providers } from "@/app/providers";
 
 const roboto = Roboto({
     weight: ["400", "700"],
@@ -27,12 +26,10 @@ export default function RootLayout({ children }) {
                     roboto.className
                 )}
             >
-                <Providers>
-                    <Navigate />
-                    {children}
-                    <Footer />
-                    <div id="modals" />
-                </Providers>
+                <Navigate />
+                {children}
+                <Footer />
+                <div id="modals" />
             </body>
         </html>
     );
