@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { register } from "@/actions/register";
 import { RegisterSchema } from "@/schemas";
@@ -15,6 +16,7 @@ import { FormError } from "@/components/auth/form-error";
 import { InputField } from "@/components/auth/ui/input-field";
 
 export function RegisterForm({ onSwitchModal, onCloseModal }) {
+    const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -29,17 +31,19 @@ export function RegisterForm({ onSwitchModal, onCloseModal }) {
     });
 
     const onSubmit = (values) => {
-        setSuccess("");
-        setError("");
+        if (captcha) {
+            setSuccess("");
+            setError("");
 
-        startTransition(() => {
-            register(values)
-                .then((data) => {
-                    setError(data.error);
-                    setSuccess(data.success);
-                })
-                .catch(() => setError("Что-то пошло не так!"));
-        });
+            startTransition(() => {
+                register(values)
+                    .then((data) => {
+                        setError(data.error);
+                        setSuccess(data.success);
+                    })
+                    .catch(() => setError("Что-то пошло не так!"));
+            });
+        }
     };
 
     return (
@@ -93,6 +97,11 @@ export function RegisterForm({ onSwitchModal, onCloseModal }) {
 
                     <FormSuccess message={success} />
                     <FormError message={error} />
+                    <ReCAPTCHA
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                        onChange={setCaptcha}
+                        className="flex items-center justify-center"
+                    />
                     <Button
                         type="submit"
                         disabled={isPending}

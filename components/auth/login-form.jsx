@@ -1,22 +1,13 @@
 "use client";
 
-import Link from "next/link";
-
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { LoginSchema } from "@/schemas";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
@@ -28,6 +19,7 @@ export function LoginForm({ onSwitchModal, onCloseModal }) {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl");
 
+    const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -41,17 +33,19 @@ export function LoginForm({ onSwitchModal, onCloseModal }) {
     });
 
     const onSubmit = (values) => {
-        setSuccess("");
-        setError("");
+        if (captcha) {
+            setSuccess("");
+            setError("");
 
-        startTransition(() => {
-            login(values, callbackUrl).then((data) => {
-                if (data) {
-                    setError(data.error);
-                    setSuccess(data.success);
-                }
+            startTransition(() => {
+                login(values, callbackUrl).then((data) => {
+                    if (data) {
+                        setError(data.error);
+                        setSuccess(data.success);
+                    }
+                });
             });
-        });
+        }
     };
 
     return (
@@ -64,7 +58,7 @@ export function LoginForm({ onSwitchModal, onCloseModal }) {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
+                    className="space-y-4"
                 >
                     <InputField
                         form={form}
@@ -117,6 +111,11 @@ export function LoginForm({ onSwitchModal, onCloseModal }) {
                     </div> */}
                     <FormSuccess message={success} />
                     <FormError message={error} />
+                    <ReCAPTCHA
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                        onChange={setCaptcha}
+                        className="flex items-center justify-center"
+                    />
                     <Button
                         type="submit"
                         disabled={isPending}
