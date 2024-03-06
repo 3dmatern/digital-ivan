@@ -24,7 +24,7 @@ import { FormError } from "@/components/auth/form-error";
 import { login } from "@/actions/login";
 import { InputField } from "./ui/input-field";
 
-export function LoginForm({ onSwitchModal }) {
+export function LoginForm({ onSwitchModal, onCloseModal }) {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl");
 
@@ -59,6 +59,7 @@ export function LoginForm({ onSwitchModal }) {
             headerLabel="Вход"
             backButtonLabel="Ещё нет аккаунта?"
             onClickBackButton={() => onSwitchModal("register")}
+            onCloseModal={onCloseModal}
         >
             <Form {...form}>
                 <form

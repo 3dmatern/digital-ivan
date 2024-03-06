@@ -28,16 +28,23 @@ export function NavigateAuth({ isAuth, isActive, onCloseMenu }) {
         setIsModal((prev) => ({
             ...prev,
             isOpen: false,
-            typeForm: "register",
+            typeForm: "",
         }));
     };
+
     return (
         <>
             <UiModal isOpen={isModal.isOpen} onClose={handleCloseModal}>
                 {isModal.typeForm === "register" ? (
-                    <RegisterForm onSwitchModal={handleSwitchModal} />
+                    <RegisterForm
+                        onSwitchModal={handleSwitchModal}
+                        onCloseModal={handleCloseModal}
+                    />
                 ) : (
-                    <LoginForm onSwitchModal={handleSwitchModal} />
+                    <LoginForm
+                        onSwitchModal={handleSwitchModal}
+                        onCloseModal={handleCloseModal}
+                    />
                 )}
             </UiModal>
 

@@ -10,7 +10,7 @@ import { UiLink } from "@/components/uikit/ui-link";
 import { Button } from "@/components/ui/button";
 import { UiMenuIcon } from "@/components/uikit/icons/ui-menu-icon";
 import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
-import { NavigateAuth } from "@/components/navigate/ui/navigate-auth";
+import { NavigateAuth } from "@/components/navigate/navigate-auth";
 
 export function Navigate({ isAuth }) {
     const [isActive, setIsActive] = useState(false);

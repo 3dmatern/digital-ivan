@@ -14,7 +14,7 @@ import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import { InputField } from "@/components/auth/ui/input-field";
 
-export function RegisterForm({ onSwitchModal }) {
+export function RegisterForm({ onSwitchModal, onCloseModal }) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -46,6 +46,7 @@ export function RegisterForm({ onSwitchModal }) {
             headerLabel="Регистрация"
             backButtonLabel="Уже есть аккаунт?"
             onClickBackButton={() => onSwitchModal("login")}
+            onCloseModal={onCloseModal}
         >
             <Form {...form}>
                 <form
