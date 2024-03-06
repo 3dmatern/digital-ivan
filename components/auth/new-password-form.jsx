@@ -17,12 +17,11 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function NewPasswordForm() {
-    const searchParams = useSearchParams();
-    const resetToken = searchParams.get("reset");
-    console.log(resetToken);
-    const { onOpenModal, onSwitchModal, onCloseModal } = useAuthNavigate();
-
+export function NewPasswordForm({
+    resetToken,
+    onClickBackButton,
+    onCloseModal,
+}) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -33,12 +32,6 @@ export function NewPasswordForm() {
             confirmPassword: "",
         },
     });
-
-    useEffect(() => {
-        if (resetToken) {
-            onOpenModal("reset");
-        }
-    }, [onOpenModal, resetToken]);
 
     const onSubmit = (values) => {
         setSuccess("");
@@ -56,7 +49,7 @@ export function NewPasswordForm() {
         <CardWrapper
             headerLabel="Введите новый пароль"
             backButtonLabel="Вход"
-            onClickBackButton={() => onSwitchModal("login")}
+            onClickBackButton={() => onClickBackButton("login")}
             onCloseModal={onCloseModal}
         >
             <Form {...form}>

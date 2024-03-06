@@ -11,6 +11,8 @@ import { ResetForm } from "@/components/auth/reset-form";
 import { NewPasswordForm } from "@/components/auth/new-password-form";
 
 export function AuthNavigate({
+    verifiedToken,
+    resetToken,
     isAuth,
     isActive,
     typeForm,
@@ -37,7 +39,13 @@ export function AuthNavigate({
                     />
                 );
             case "verified":
-                return <NewVerificationForm />;
+                return (
+                    <NewVerificationForm
+                        verifiedToken={verifiedToken}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
+                    />
+                );
             case "resetPassword":
                 return (
                     <ResetForm
@@ -46,7 +54,13 @@ export function AuthNavigate({
                     />
                 );
             case "reset":
-                return <NewPasswordForm />;
+                return (
+                    <NewPasswordForm
+                        resetToken={resetToken}
+                        onClickBackButton={onSwitchModal}
+                        onCloseModal={onCloseModal}
+                    />
+                );
             default:
                 return;
         }

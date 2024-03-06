@@ -1,13 +1,35 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export function useAuthNavigate() {
+    const searchParams = useSearchParams();
+    const verifiedToken = searchParams.get("verified");
+    const resetToken = searchParams.get("reset");
+
     const [isActive, setIsActive] = useState(false);
     const [isModal, setIsModal] = useState({
         isOpen: false,
         typeForm: "",
     });
+
+    useEffect(() => {
+        if (verifiedToken) {
+            setIsModal((prev) => ({
+                ...prev,
+                isOpen: true,
+                typeForm: "verified",
+            }));
+        }
+        if (resetToken) {
+            setIsModal((prev) => ({
+                ...prev,
+                isOpen: true,
+                typeForm: "reset",
+            }));
+        }
+    }, [resetToken, verifiedToken]);
 
     const handleOpenMenu = () => {
         setIsActive((prev) => !prev);
@@ -34,6 +56,8 @@ export function useAuthNavigate() {
     };
 
     return {
+        verifiedToken,
+        resetToken,
         isAuth: false,
         isActive,
         typeForm: isModal.typeForm,

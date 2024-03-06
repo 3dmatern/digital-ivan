@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { Navigate } from "@/components/navigate";
 import { Footer } from "@/components/footer";
 
+export const dynamic = "force-dynamic";
+
 const roboto = Roboto({
     weight: ["400", "700"],
     subsets: ["cyrillic", "latin"],

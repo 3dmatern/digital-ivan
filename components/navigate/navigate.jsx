@@ -14,6 +14,8 @@ import { AuthNavigate } from "@/components/auth/auth-navigate";
 
 export function Navigate() {
     let {
+        verifiedToken,
+        resetToken,
         isAuth,
         isActive,
         typeForm,
@@ -65,6 +67,8 @@ export function Navigate() {
                 auth={
                     <AuthLinks isActive={isActive}>
                         <AuthNavigate
+                            verifiedToken={verifiedToken}
+                            resetToken={resetToken}
                             isAuth={isAuth}
                             isActive={isActive}
                             typeForm={typeForm}
