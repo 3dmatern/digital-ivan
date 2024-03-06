@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { BackButton } from "@/components/auth/ui/back-button";
 import { UiHeadingThird } from "@/components/uikit/heading";
-import { Button } from "../ui/button";
 
 export function CardWrapper({
     children,
@@ -31,15 +30,11 @@ export function CardWrapper({
                     label="На главную"
                     onClick={onCloseModal}
                 />
-                <Button
-                    type="button"
-                    variant="link"
-                    size="sm"
+                <BackButton
+                    href="/"
+                    label={backButtonLabel}
                     onClick={onClickBackButton}
-                    className="font-normal w-full"
-                >
-                    {backButtonLabel}
-                </Button>
+                />
             </CardFooter>
         </Card>
     );
