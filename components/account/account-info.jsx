@@ -72,10 +72,23 @@ function AccountInfoApp() {
                         “О приложении”
                     </UiLink>
                 </p>
+                <p className="text-gray-third">
+                    Скачивая переводчик вы соглашаетесь с условиями договора
+                    Лицензии-оферты,{" "}
+                    <UiLink
+                        href="/next.svg"
+                        variant="reverse"
+                        download={true}
+                        target="_blank"
+                        className="text-base"
+                    >
+                        скачать договор.
+                    </UiLink>
+                </p>
             </div>
 
             <Button asChild variant="outline" className="w-max">
-                <Link href="#" target="_blank">
+                <Link href="/vercel.svg" target="_blank" download>
                     Скачать переводчик
                 </Link>
             </Button>
