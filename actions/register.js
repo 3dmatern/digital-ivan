@@ -1,3 +1,5 @@
+"use client";
+
 import base64 from "base-64";
 import utf8 from "utf8";
 
@@ -33,11 +35,14 @@ export const register = async (values) => {
     try {
         const data = await httpService.post("/register", payload);
         console.log(data);
+
         return {
             success: "Регистрация прошла успешно, проверьте почту",
-            data,
         };
     } catch (error) {
         console.error(error);
+        return {
+            error: error?.message,
+        };
     }
 };
