@@ -40,7 +40,7 @@ http.interceptors.response.use(
             error.response.status < 500;
 
         if (!expectedErrors) {
-            console.error("Somthing was wrong. Try it later");
+            console.error("Что-то пошло не так. Попробуйте позже");
         }
         return Promise.reject(error);
     }

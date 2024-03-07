@@ -35,6 +35,12 @@ export const register = async (values) => {
     } catch (error) {
         console.error(error);
 
+        if (error.code === "ERR_NETWORK") {
+            return {
+                error: "Что-то пошло не так. Попробуйте позже",
+            };
+        }
+
         return {
             error: error?.message,
         };
