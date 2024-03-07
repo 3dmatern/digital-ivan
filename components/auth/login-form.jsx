@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { LoginSchema } from "@/schemas";
@@ -16,8 +16,7 @@ import { login } from "@/actions/login";
 import { InputField } from "./ui/input-field";
 
 export function LoginForm({ onClickBackButton, onCloseModal }) {
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl");
+    const router = useRouter();
 
     const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
@@ -38,10 +37,14 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
             setError("");
 
             startTransition(() => {
-                login(values, callbackUrl).then((data) => {
-                    if (data) {
+                login(values).then((data) => {
+                    if (data.error) {
                         setError(data.error);
-                        setSuccess(data.success);
+                        return;
+                    }
+
+                    if (data.success) {
+                        router.push("/account");
                     }
                 });
             });

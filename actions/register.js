@@ -1,10 +1,8 @@
 "use client";
 
-import base64 from "base-64";
-import utf8 from "utf8";
-
 import { RegisterSchema } from "@/schemas";
-import httpService from "@/actions/http-service";
+import httpService from "@/services/http-service";
+import { encodeStringInBase64 } from "@/utils/encodeStringInBase64";
 
 export const register = async (values) => {
     const validatedFields = RegisterSchema.safeParse(values);
@@ -17,14 +15,9 @@ export const register = async (values) => {
 
     const { email, username, password } = validatedFields.data;
 
-    const bytesEncodeEmail = utf8.encode(email);
-    const base64EncodeEmail = base64.encode(bytesEncodeEmail);
-
-    const bytesEncodeUsername = utf8.encode(username);
-    const base64EncodeUsername = base64.encode(bytesEncodeUsername);
-
-    const bytesEncodePassword = utf8.encode(password);
-    const base64EncodePassword = base64.encode(bytesEncodePassword);
+    const base64EncodeEmail = encodeStringInBase64(email);
+    const base64EncodeUsername = encodeStringInBase64(username);
+    const base64EncodePassword = encodeStringInBase64(password);
 
     const payload = {
         email: base64EncodeEmail,
@@ -41,6 +34,7 @@ export const register = async (values) => {
         };
     } catch (error) {
         console.error(error);
+
         return {
             error: error?.message,
         };

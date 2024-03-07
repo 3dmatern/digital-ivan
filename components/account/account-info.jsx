@@ -1,13 +1,27 @@
+"use client";
+
+import { useTransition } from "react";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { UiHeadingFourth } from "../uikit/heading";
-import { UiDivContainer } from "../uikit/ui-div-container";
-import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
-import { UiLink } from "../uikit/ui-link";
-import { UiDivider } from "../uikit/ui-divider";
+
+import { subscribeExtend } from "@/actions/subscribe";
+
+import { Button } from "@/components/ui/button";
+import { UiHeadingFourth } from "@/components/uikit/heading";
+import { UiDivContainer } from "@/components/uikit/ui-div-container";
+import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
+import { UiLink } from "@/components/uikit/ui-link";
+import { UiDivider } from "@/components/uikit/ui-divider";
 import { getConcatDMY } from "@/utils/formatedDate";
 
 export function AccountInfo({}) {
+    const [isPending, startTransition] = useTransition();
+
+    const handleSubscribeExtend = () => {
+        startTransition(() => {
+            subscribeExtend();
+        });
+    };
+
     return (
         <UiSectionWrapper className="bg-background-first">
             <UiDivContainer className="pt-6 pb-14 lg:pt-10 lg:pb-[158px]">
@@ -17,6 +31,8 @@ export function AccountInfo({}) {
                             username: "username",
                             subscription: Date.now(),
                         }}
+                        isPending={isPending}
+                        onSubscribeExtend={handleSubscribeExtend}
                     />
                     <UiDivider className="hidden md:block" />
                     <AccountInfoApp />
@@ -34,7 +50,7 @@ function AccountInfoBody({ children }) {
     );
 }
 
-function AccountInfoUser({ currentUser }) {
+function AccountInfoUser({ currentUser, isPending, onSubscribeExtend }) {
     return (
         <div className=" flex flex-col gap-6 text-white">
             <div className="flex flex-col gap-2">
@@ -47,10 +63,12 @@ function AccountInfoUser({ currentUser }) {
                 </p>
             </div>
 
-            <Button asChild>
-                <Link href="/payment" className="w-max">
-                    Продлить подписку
-                </Link>
+            <Button
+                onClick={onSubscribeExtend}
+                disabled={isPending}
+                className="w-max"
+            >
+                Продлить подписку
             </Button>
         </div>
     );

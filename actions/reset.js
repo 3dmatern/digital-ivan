@@ -13,11 +13,27 @@ export const reset = async (values) => {
 
     const { email } = validatedFields.data;
 
-    if (email) {
-        return email;
-    }
+    const base64EncodeEmail = encodeStringInBase64(email);
 
-    return {
-        error: "Что-то пошло не так!",
+    const payload = {
+        email: base64EncodeEmail,
     };
+
+    try {
+        const { data } = await httpService.post(
+            "/request_reset_password",
+            payload
+        );
+        console.log(data);
+
+        return {
+            success: "Проверьте вашу почту",
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            error: error?.message,
+        };
+    }
 };

@@ -1,4 +1,10 @@
+"use client";
+
 import { LoginSchema } from "@/schemas";
+import httpService from "@/services/http-service";
+import { parseToken } from "@/services/parse-token";
+import localStorageService from "@/services/local-storage-service";
+import { encodeStringInBase64 } from "@/utils/encodeStringInBase64";
 
 export const login = async (values, callbackUrl) => {
     const validatedFields = LoginSchema.safeParse(values);
@@ -11,45 +17,33 @@ export const login = async (values, callbackUrl) => {
 
     const { email, password } = validatedFields.data;
 
-    const existingUser = await getUserByEmail(email);
+    const base64EncodeEmail = encodeStringInBase64(email);
+    const base64EncodePassword = encodeStringInBase64(password);
 
-    if (!existingUser || !existingUser.email) {
-        return { error: "Email не существует!" };
-    }
-
-    if (!existingUser.emailVerified) {
-        const verificationToken = await generateVerificationToken(
-            existingUser.email
-        );
-
-        const response = await sendVerificationBegetSMTP(
-            verificationToken.email,
-            verificationToken.token
-        );
-
-        return response;
-    }
+    const payload = {
+        email: base64EncodeEmail,
+        password: base64EncodePassword,
+    };
 
     try {
-        await signIn("credentials", {
-            email,
-            password,
-            redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-        });
-    } catch (error) {
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case "CredentialsSignin":
-                    return {
-                        error: "Неверные учетные данные!",
-                    };
-                default:
-                    return {
-                        error: "Что-то пошло не так!",
-                    };
-            }
-        }
+        const { data } = await httpService.post("/login_web", payload);
+        console.log(data);
 
-        throw error;
+        // const parseAccessToken = await parseToken(data.token);
+        // localStorageService.setTokens({
+        //     userId: parseAccessToken.userId,
+        //     accessToken: data.token,
+        //     expiresIn: data.expiration,
+        // });
+
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            error: error?.message,
+        };
     }
 };

@@ -2,11 +2,11 @@
 
 import { NewPasswordSchema } from "@/schemas";
 
-export const newPassword = async (values, token) => {
+export const newPassword = async (values, resetToken) => {
+    let token = resetToken.trim();
+
     if (!token) {
-        return {
-            error: "Отсутствует токен!",
-        };
+        return { error: "Токен не существует" };
     }
 
     const validatedFields = NewPasswordSchema.safeParse(values);
@@ -19,31 +19,27 @@ export const newPassword = async (values, token) => {
 
     const { password } = validatedFields.data;
 
-    // const existingToken = await getPasswordResetTokenByToken(token);
+    const base64EncodePassword = encodeStringInBase64(password);
 
-    // if (!existingToken) {
-    //     return {
-    //         error: "Неверный токен!",
-    //     };
-    // }
-
-    // const hasExpired = new Date(existingToken.expires) < new Date();
-
-    // if (hasExpired) {
-    //     return {
-    //         error: "Токен устарел!",
-    //     };
-    // }
-
-    // const existingUser = await getUserByEmail(existingToken.email);
-
-    // if (!existingUser) {
-    //     return {
-    //         error: "Email не существует!",
-    //     };
-    // }
-
-    return {
-        success: "Пароль обновлен!",
+    const payload = {
+        password: base64EncodePassword,
     };
+
+    try {
+        const { data } = await httpService.post(
+            `reset_password/${token}`,
+            payload
+        );
+        console.log(data);
+
+        return {
+            success: "Пароль успешно обновлен!",
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            error: error?.message,
+        };
+    }
 };
