@@ -12,21 +12,18 @@ export const RegisterSchema = z
             message: "Email обязателен",
         }),
         username: z.string().trim().min(3, { message: "Минимум из трёх букв" }),
-        password: z
-            .string()
-            .trim()
-            .min(8, {
-                message: "Минимум 8 смиволов",
-            })
-            .regex(LOWER_REGEXP, {
-                message: "Хотя бы одну букву в нижнем регистре",
-            })
-            .regex(CAPITAL_REGEXP, {
-                message: "Хотя бы одну букву в верхнем регистре",
-            })
-            .regex(DIGIT_REGEXP, {
-                message: "Хотя бы одну цифру",
-            }),
+        password: z.string().trim().min(8, {
+            message: "Минимум 8 смиволов",
+        }),
+        // .regex(LOWER_REGEXP, {
+        //     message: "Хотя бы одну букву в нижнем регистре",
+        // })
+        // .regex(CAPITAL_REGEXP, {
+        //     message: "Хотя бы одну букву в верхнем регистре",
+        // })
+        // .regex(DIGIT_REGEXP, {
+        //     message: "Хотя бы одну цифру",
+        // }),
         confirmPassword: z.string().trim().min(8, {
             message: "Минимум 8 смиволов",
         }),
