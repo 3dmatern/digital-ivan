@@ -12,7 +12,7 @@ import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiDivider } from "@/components/uikit/ui-divider";
 
-export function AccountInfo() {
+export function AccountInfo({ user }) {
     const [isPending, startTransition] = useTransition();
 
     const handleSubscribeExtend = () => {
@@ -24,7 +24,7 @@ export function AccountInfo() {
             }
 
             if (data.success) {
-                setSubscriptionEnd((prev) => data.success);
+                console.log(data.success);
             }
         });
     };
@@ -34,8 +34,8 @@ export function AccountInfo() {
             <UiDivContainer className="pt-6 pb-14 lg:pt-10 lg:pb-[158px]">
                 <AccountInfoBody>
                     <AccountInfoUser
-                        username={username}
-                        subscriptionEnd={subscriptionEnd}
+                        username={user.username}
+                        subscriptionEnd={user.subscriptionEnd}
                         isPending={isPending}
                         onSubscribeExtend={handleSubscribeExtend}
                     />

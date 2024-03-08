@@ -8,7 +8,7 @@ export const publicRoutes = ["/", "/?verified=", "/about-app"];
 
 /**
  * An array of routes that are used for authentication
- * These routes will redirect logged in users to /sheets
+ * These routes will redirect logged in users to /account
  * @type {string[]}
  */
 

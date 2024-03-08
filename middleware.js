@@ -13,10 +13,16 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
+    const isAuthRoute =
+        !!nextUrl.searchParams.get("auth") ||
+        !!nextUrl.searchParams.get("reset");
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-    const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+    // const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+    console.log("22: ", nextUrl.searchParams.get("auth"));
+    console.log("23: ", isAuthRoute);
 
     if (isApiAuthRoute) {
         return null;
@@ -24,6 +30,7 @@ export default auth((req) => {
 
     if (isAuthRoute) {
         if (isLoggedIn) {
+            console.log("isAuthRoute, isLoggedIn");
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
         }
         return null;
