@@ -18,6 +18,16 @@ export function AuthNavigateContextProvider({ children }) {
     });
 
     useEffect(() => {
+        if (authParam) {
+            setIsModal((prev) => ({
+                ...prev,
+                isOpen: true,
+                typeForm: authParam,
+            }));
+        }
+    }, [authParam]);
+
+    useEffect(() => {
         if (verifiedToken) {
             setIsModal((prev) => ({
                 ...prev,
@@ -56,7 +66,7 @@ export function AuthNavigateContextProvider({ children }) {
                 verifiedToken,
                 resetToken,
                 isActiveMobMenu,
-                typeForm: isModal.typeForm || authParam,
+                typeForm: isModal.typeForm,
                 isOpen: isModal.isOpen,
                 onOpenMenu: handleOpenMenu,
                 onCloseMenu: handleCloseMenu,

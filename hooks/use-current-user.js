@@ -1,22 +1,12 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
-import localStorageService from "@/services/local-storage-service";
+import { useSession, signOut } from "next-auth/react";
 
 export function useCurrentUser() {
-    const [currentUser, setCurrentUser] = useState(null);
+    const { data: session, status } = useSession();
+    console.log("useCurrentUser: ", session, status);
 
-    useEffect(() => {
-        setCurrentUser((prev) => localStorageService.getUserData());
-    }, []);
-
-    const updateCurrentUser = (payload) => {
-        setCurrentUser((prev) => ({ ...prev, ...payload }));
-    };
-
-    return {
-        currentUser,
-        updateCurrentUser,
-    };
+    if (!session) {
+        signOut();
+        return;
+    }
+    return session.user;
 }

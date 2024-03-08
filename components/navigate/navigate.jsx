@@ -32,14 +32,14 @@ export function Navigate() {
         <UiHeader
             className={cn(
                 `
-            w-full flex items-center
-            absolute top-0 left-0 z-10
-        `,
+                    w-full flex items-center
+                    absolute top-0 left-0 z-10
+                `,
                 isActive && `h-screen`
             )}
         >
             <NavigateContainer
-                logo={<Logo text="niko" onClick={onCloseMenu} />}
+                logo={<Logo onClick={onCloseMenu} />}
                 links={
                     <NavigateLinks isActive={isActive}>
                         <UiLink

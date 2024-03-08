@@ -45,14 +45,14 @@ export function AuthNavigate({
                         onCloseModal={onCloseModal}
                     />
                 );
-            case "resetPassword":
+            case "reset-password":
                 return (
                     <ResetForm
                         onClickBackButton={onOpenModal}
                         onCloseModal={onCloseModal}
                     />
                 );
-            case "reset":
+            case "new-password":
                 return (
                     <NewPasswordForm
                         resetToken={resetToken}

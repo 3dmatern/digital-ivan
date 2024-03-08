@@ -4,7 +4,6 @@ import { useTransition } from "react";
 import Link from "next/link";
 
 import { subscribeExtend } from "@/actions/subscribe";
-import { useCurrentUserContext } from "@/contexts/current-user-context";
 
 import { Button } from "@/components/ui/button";
 import { UiHeadingFourth } from "@/components/uikit/heading";
@@ -14,8 +13,6 @@ import { UiLink } from "@/components/uikit/ui-link";
 import { UiDivider } from "@/components/uikit/ui-divider";
 
 export function AccountInfo() {
-    const { username, subscriptionEnd, setSubscriptionEnd } =
-        useCurrentUserContext();
     const [isPending, startTransition] = useTransition();
 
     const handleSubscribeExtend = () => {

@@ -15,13 +15,14 @@ export const {
     },
     callbacks: {
         async jwt({ token, user }) {
-            if (!token.sub || !user.access_token) return null;
+            console.log("jwt: ", token, user);
+            if (!token.sub || !user?.access_token) return null;
 
             const {
                 sub: username,
                 exp: tokenExp,
                 subscription_end: subscriptionEnd,
-            } = await parseToken(user.access_token);
+            } = await parseToken(user?.access_token);
 
             // Получаем текущее время в секундах
             const currentTimeInSeconds = Math.floor(Date.now() / 1000);
