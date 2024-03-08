@@ -35,13 +35,17 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
             setSuccess("");
             setError("");
 
-            startTransition(() => {
-                register(values)
-                    .then((data) => {
-                        setError(data.error);
-                        setSuccess(data.success);
-                    })
-                    .catch(() => setError("Что-то пошло не так!"));
+            startTransition(async () => {
+                const data = await register(values);
+
+                if (data?.error) {
+                    setError(data.error);
+                }
+
+                if (data?.success) {
+                    setSuccess(data.success);
+                    form.reset();
+                }
             });
         }
     };

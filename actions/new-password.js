@@ -26,11 +26,11 @@ export const newPassword = async (values, resetToken) => {
     };
 
     try {
-        const { data } = await httpService.post(
-            `reset_password/${token}`,
-            payload
-        );
-        console.log(data);
+        // const { data } = await httpService.post(
+        //     `reset_password/${token}`,
+        //     payload
+        // );
+        // console.log(data);
 
         return {
             success: "Пароль успешно обновлен!",

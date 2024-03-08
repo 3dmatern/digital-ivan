@@ -18,7 +18,6 @@ export function AuthNavigate({
     typeForm,
     isOpen,
     onOpenModal,
-    onSwitchModal,
     onCloseModal,
     onCloseMenu,
 }) {
@@ -27,14 +26,14 @@ export function AuthNavigate({
             case "register":
                 return (
                     <RegisterForm
-                        onClickBackButton={onSwitchModal}
+                        onClickBackButton={onOpenModal}
                         onCloseModal={onCloseModal}
                     />
                 );
             case "login":
                 return (
                     <LoginForm
-                        onClickBackButton={onSwitchModal}
+                        onClickBackButton={onOpenModal}
                         onCloseModal={onCloseModal}
                     />
                 );
@@ -42,14 +41,14 @@ export function AuthNavigate({
                 return (
                     <NewVerificationForm
                         verifiedToken={verifiedToken}
-                        onClickBackButton={onSwitchModal}
+                        onClickBackButton={onOpenModal}
                         onCloseModal={onCloseModal}
                     />
                 );
             case "resetPassword":
                 return (
                     <ResetForm
-                        onClickBackButton={onSwitchModal}
+                        onClickBackButton={onOpenModal}
                         onCloseModal={onCloseModal}
                     />
                 );
@@ -57,7 +56,7 @@ export function AuthNavigate({
                 return (
                     <NewPasswordForm
                         resetToken={resetToken}
-                        onClickBackButton={onSwitchModal}
+                        onClickBackButton={onOpenModal}
                         onCloseModal={onCloseModal}
                     />
                 );
@@ -94,7 +93,8 @@ export function AuthNavigate({
                     <UiLink
                         href="#"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.preventDefault();
                             onOpenModal("register");
                             onCloseMenu();
                         }}
@@ -104,7 +104,8 @@ export function AuthNavigate({
                     <UiLink
                         href="#"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.preventDefault();
                             onOpenModal("login");
                             onCloseMenu();
                         }}

@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 
 import { subscribeExtend } from "@/actions/subscribe";
+import { useCurrentUserContext } from "@/contexts/current-user-context";
 
 import { Button } from "@/components/ui/button";
 import { UiHeadingFourth } from "@/components/uikit/heading";
@@ -11,14 +12,23 @@ import { UiDivContainer } from "@/components/uikit/ui-div-container";
 import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiDivider } from "@/components/uikit/ui-divider";
-import { getConcatDMY } from "@/utils/formatedDate";
 
-export function AccountInfo({}) {
+export function AccountInfo() {
+    const { username, subscriptionEnd, setSubscriptionEnd } =
+        useCurrentUserContext();
     const [isPending, startTransition] = useTransition();
 
     const handleSubscribeExtend = () => {
         startTransition(() => {
-            subscribeExtend();
+            const data = subscribeExtend();
+
+            if (data.error) {
+                console.error(data.error);
+            }
+
+            if (data.success) {
+                setSubscriptionEnd((prev) => data.success);
+            }
         });
     };
 
@@ -27,10 +37,8 @@ export function AccountInfo({}) {
             <UiDivContainer className="pt-6 pb-14 lg:pt-10 lg:pb-[158px]">
                 <AccountInfoBody>
                     <AccountInfoUser
-                        currentUser={{
-                            username: "username",
-                            subscription: Date.now(),
-                        }}
+                        username={username}
+                        subscriptionEnd={subscriptionEnd}
                         isPending={isPending}
                         onSubscribeExtend={handleSubscribeExtend}
                     />
@@ -50,16 +58,19 @@ function AccountInfoBody({ children }) {
     );
 }
 
-function AccountInfoUser({ currentUser, isPending, onSubscribeExtend }) {
+function AccountInfoUser({
+    username,
+    subscriptionEnd,
+    isPending,
+    onSubscribeExtend,
+}) {
     return (
         <div className=" flex flex-col gap-6 text-white">
             <div className="flex flex-col gap-2">
-                <UiHeadingFourth>User: {currentUser.username}</UiHeadingFourth>
+                <UiHeadingFourth>User: {username}</UiHeadingFourth>
                 <p className="text-gray-third">
                     Дата окончания подписки:{" "}
-                    <span className="text-prim">
-                        {getConcatDMY(currentUser.subscription)}
-                    </span>
+                    <span className="text-prim">{subscriptionEnd}</span>
                 </p>
             </div>
 

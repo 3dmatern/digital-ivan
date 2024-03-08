@@ -1,8 +1,10 @@
 "use client";
 
+import { useContext } from "react";
+
 import { cn } from "@/lib/utils";
 
-import { useAuthNavigate } from "@/hooks/use-auth-navigate";
+import { AuthNavigateContext } from "@/contexts/auth-navigate-context";
 
 import { UiHeader } from "@/components/uikit/ui-header";
 import { Logo } from "@/components/logo";
@@ -13,7 +15,7 @@ import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
 import { AuthNavigate } from "@/components/auth/auth-navigate";
 
 export function Navigate() {
-    let {
+    const {
         verifiedToken,
         resetToken,
         isAuth,
@@ -23,9 +25,8 @@ export function Navigate() {
         onOpenMenu,
         onCloseMenu,
         onOpenModal,
-        onSwitchModal,
         onCloseModal,
-    } = useAuthNavigate();
+    } = useContext(AuthNavigateContext);
 
     return (
         <UiHeader
@@ -74,7 +75,6 @@ export function Navigate() {
                             typeForm={typeForm}
                             isOpen={isOpen}
                             onOpenModal={onOpenModal}
-                            onSwitchModal={onSwitchModal}
                             onCloseModal={onCloseModal}
                             onCloseMenu={onCloseMenu}
                         />

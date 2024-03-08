@@ -20,11 +20,13 @@ export const reset = async (values) => {
     };
 
     try {
-        const { data } = await httpService.post(
-            "/request_reset_password",
-            payload
-        );
-        console.log(data);
+        // const { data } = await httpService.post(
+        //     "request_reset_password",
+        //     payload
+        // );
+        // console.log(data);
+
+        console.log("http://localhost:3000/?reset=qwe");
 
         return {
             success: "Проверьте вашу почту",

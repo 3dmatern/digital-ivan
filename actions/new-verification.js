@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 import httpService from "@/services/http-service";
 
@@ -10,17 +10,27 @@ export const newVerification = async (verifidToken) => {
     }
 
     try {
-        const data = await httpService.get(`/confirm/${token}`);
+        const data = await httpService.get(`confirm/${token}`);
         console.log(data);
 
         return {
-            success: "Почта подтверждена, теперь вы можете войти",
+            success: data?.message,
         };
     } catch (error) {
-        console.error(error);
+        if (error?.code === "ERR_NETWORK") {
+            return {
+                error: "Что-то пошло не так. Попробуйте позже",
+            };
+        }
+
+        if (error.code === "ERR_BAD_REQUEST") {
+            return {
+                error: error?.response?.data?.message,
+            };
+        }
 
         return {
-            error: error?.message,
+            error: "Что-то пошло не так. Попробуйте позже",
         };
     }
 };

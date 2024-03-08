@@ -10,43 +10,44 @@ import { LoginSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
+import { InputField } from "@/components/auth/ui/input-field";
+
 import { login } from "@/actions/login";
-import { InputField } from "./ui/input-field";
 
 export function LoginForm({ onClickBackButton, onCloseModal }) {
     const router = useRouter();
 
     const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
 
     const form = useForm({
         resolver: zodResolver(LoginSchema),
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
         },
     });
 
     const onSubmit = (values) => {
         if (captcha) {
-            setSuccess("");
             setError("");
 
-            startTransition(() => {
-                login(values).then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                        return;
-                    }
+            startTransition(async () => {
+                const data = await login(values);
 
-                    if (data.success) {
-                        router.push("/account");
-                    }
-                });
+                if (data?.error) {
+                    setError(data.error);
+                    return;
+                }
+
+                if (data?.success) {
+                    form.resetField("username");
+                    form.resetField("password");
+                    onCloseModal();
+                    // router.push("/account");
+                }
             });
         }
     };
@@ -65,12 +66,11 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                 >
                     <InputField
                         form={form}
-                        name="email"
-                        label="Введите почту"
-                        type="email"
+                        name="username"
+                        label="Введите имя пользователя"
+                        type="text"
                         isPending={isPending}
-                        placeholder="jhon.doe@example.com"
-                        error={form.formState.errors["email"]}
+                        error={form.formState.errors["username"]}
                     />
 
                     <InputField
@@ -94,7 +94,6 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                         }
                         error={form.formState.errors["password"]}
                     />
-                    <FormSuccess message={success} />
                     <FormError message={error} />
                     <ReCAPTCHA
                         sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}

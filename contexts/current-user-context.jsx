@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const CurrentUserContext = createContext(null);
 
@@ -14,7 +14,7 @@ export function CurrentUserProvider({ children, ...props }) {
     );
 }
 
-export function useAppContext() {
+export function useCurrentUserContext() {
     const context = useContext(CurrentUserContext);
 
     if (!context) throw new Error("Use app context within provider!");
@@ -22,14 +22,15 @@ export function useAppContext() {
 }
 
 export const useCreateCurrentUserContext = function (props) {
-    const [currentUser, setCurrentUser] = useState(props.currentUser || null);
-
-    const getCurrentUser = useCallback((user) => {
-        setCurrentUser((prev) => user);
-    }, []);
+    const [username, setUsername] = useState(props.username || null);
+    const [subscriptionEnd, setSubscriptionEnd] = useState(
+        props.subscriptionEnd || null
+    );
 
     return {
-        currentUser,
-        getCurrentUser,
+        username,
+        subscriptionEnd,
+        setUsername,
+        setSubscriptionEnd,
     };
 };

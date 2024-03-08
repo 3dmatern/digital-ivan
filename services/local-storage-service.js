@@ -1,57 +1,70 @@
+"use client";
+
+const USERNAME_KEY = "username";
 const TOKEN_KEY = "jwt-token";
 const EXPIRES_KEY = "jwt-expires";
-const USERID_KEY = "user-id";
-const USER_DATA_KEY = "user-data";
+const SUBSCRIBE_KEY = "subscriptionEnd";
 
-export function setTokens({ accessToken, userId, expiresIn }) {
-    localStorage.setItem(USERID_KEY, userId);
-    localStorage.setItem(TOKEN_KEY, accessToken);
-    localStorage.setItem(EXPIRES_KEY, expiresIn);
+export function setTokens({
+    username,
+    accessToken,
+    expiresIn,
+    subscriptionEnd,
+}) {
+    if (typeof window !== "undefined") {
+        localStorage.setItem(USERNAME_KEY, username);
+        localStorage.setItem(TOKEN_KEY, accessToken);
+        localStorage.setItem(EXPIRES_KEY, expiresIn);
+        localStorage.setItem(SUBSCRIBE_KEY, subscriptionEnd);
+    }
 }
 
-export function setUser(user) {
-    localStorage.setItem(USER_DATA_KEY, JSON.stringify(user));
+export function setSubscriptionEnd(payload) {
+    if (typeof window !== "undefined") {
+        localStorage.setItem(SUBSCRIBE_KEY, payload);
+    }
 }
 
 export function getAccessToken() {
-    return localStorage.getItem(TOKEN_KEY);
+    if (typeof window !== "undefined") {
+        return localStorage.getItem(TOKEN_KEY);
+    }
 }
 
 export function getTokenExpiresDate() {
-    return localStorage.getItem(EXPIRES_KEY);
+    if (typeof window !== "undefined") {
+        return localStorage.getItem(EXPIRES_KEY);
+    }
 }
 
-export function getUser() {
-    const userData = JSON.parse(localStorage.getItem(USER_DATA_KEY));
-
-    return userData;
+export function getUsername() {
+    if (typeof window !== "undefined") {
+        return localStorage.getItem(USERNAME_KEY);
+    }
 }
 
-export function getUserId() {
-    return localStorage.getItem(USERID_KEY);
-}
-
-export function updUser(payload) {
-    const user = JSON.parse(localStorage.getItem(USER_DATA_KEY));
-    const updatedUser = JSON.stringify({ ...user, ...payload });
-    localStorage.setItem(USER_DATA_KEY, updatedUser);
+export function getSubscriptionEnd() {
+    if (typeof window !== "undefined") {
+        return localStorage.getItem(SUBSCRIBE_KEY);
+    }
 }
 
 export function removeAuthData() {
-    localStorage.removeItem(USERID_KEY);
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(EXPIRES_KEY);
-    localStorage.removeItem(USER_DATA_KEY);
+    if (typeof window !== "undefined") {
+        localStorage.removeItem(USERNAME_KEY);
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(EXPIRES_KEY);
+        localStorage.removeItem(SUBSCRIBE_KEY);
+    }
 }
 
 const localStorageService = {
     setTokens,
-    setUser,
+    setSubscriptionEnd,
     getAccessToken,
     getTokenExpiresDate,
-    getUser,
-    getUserId,
-    updUser,
+    getUsername,
+    getSubscriptionEnd,
     removeAuthData,
 };
 

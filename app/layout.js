@@ -3,6 +3,8 @@ import "./globals.css";
 
 import { cn } from "@/lib/utils";
 
+import { AuthNavigateContextProvider } from "@/contexts/auth-navigate-context";
+
 import { Navigate } from "@/components/navigate";
 import { Footer } from "@/components/footer";
 
@@ -28,10 +30,12 @@ export default function RootLayout({ children }) {
                     roboto.className
                 )}
             >
-                <Navigate />
-                {children}
-                <Footer />
-                <div id="modals" />
+                <AuthNavigateContextProvider>
+                    <Navigate />
+                    {children}
+                    <Footer />
+                    <div id="modals" />
+                </AuthNavigateContextProvider>
             </body>
         </html>
     );

@@ -3,9 +3,6 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
-
-import { useAuthNavigate } from "@/hooks/use-auth-navigate";
 
 import { NewPasswordSchema } from "@/schemas";
 import { newPassword } from "@/actions/new-password";

@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 import { RegisterSchema } from "@/schemas";
 import httpService from "@/services/http-service";
@@ -26,23 +26,30 @@ export const register = async (values) => {
     };
 
     try {
-        const data = await httpService.post("/register", payload);
-        console.log(data);
+        const { data } = await httpService.post("register", payload, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
         return {
-            success: "Регистрация прошла успешно, проверьте почту",
+            success: data.message,
         };
     } catch (error) {
-        console.error(error);
-
-        if (error.code === "ERR_NETWORK") {
+        if (error?.code === "ERR_NETWORK") {
             return {
                 error: "Что-то пошло не так. Попробуйте позже",
             };
         }
 
+        if (error.code === "ERR_BAD_REQUEST") {
+            return {
+                error: error?.response?.data?.message,
+            };
+        }
+
         return {
-            error: error?.message,
+            error: "Что-то пошло не так. Попробуйте позже",
         };
     }
 };

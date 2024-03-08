@@ -1,10 +1,10 @@
-"use client";
+"use server";
 
 import { LoginSchema } from "@/schemas";
-import httpService from "@/services/http-service";
-import { parseToken } from "@/services/parse-token";
-import localStorageService from "@/services/local-storage-service";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { encodeStringInBase64 } from "@/utils/encodeStringInBase64";
+import httpService from "@/services/http-service";
 
 export const login = async (values, callbackUrl) => {
     const validatedFields = LoginSchema.safeParse(values);
@@ -15,35 +15,37 @@ export const login = async (values, callbackUrl) => {
         };
     }
 
-    const { email, password } = validatedFields.data;
-
-    const base64EncodeEmail = encodeStringInBase64(email);
+    const { username, password } = validatedFields.data;
+    const base64EncodeUsername = encodeStringInBase64(username);
     const base64EncodePassword = encodeStringInBase64(password);
 
     const payload = {
-        email: base64EncodeEmail,
+        username: base64EncodeUsername,
         password: base64EncodePassword,
     };
 
     try {
-        const { data } = await httpService.post("/login_web", payload);
-        console.log(data);
+        const { data } = await httpService.post("login_web", payload, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-        // const parseAccessToken = await parseToken(data.token);
-        // localStorageService.setTokens({
-        //     userId: parseAccessToken.userId,
-        //     accessToken: data.token,
-        //     expiresIn: data.expiration,
-        // });
-
-        return {
-            success: true,
-        };
+        await signIn("credentials", {
+            ...data,
+            redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+        });
     } catch (error) {
-        console.error(error);
+        if (error?.code === "ERR_NETWORK") {
+            return {
+                error: "Что-то пошло не так. Попробуйте позже",
+            };
+        }
 
-        return {
-            error: error?.message,
-        };
+        if (error.code === "ERR_BAD_REQUEST") {
+            return {
+                error: error?.response?.data?.message,
+            };
+        }
     }
 };
