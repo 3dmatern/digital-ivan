@@ -4,7 +4,6 @@ import {
     AccountInfo,
     AccountSubscribe,
 } from "@/components/account";
-import { currentUser } from "@/lib/auth";
 
 export const metadata = {
     title: "NIKO | Личный кабинет",
@@ -12,13 +11,10 @@ export const metadata = {
 };
 
 export default async function AccountAppPage() {
-    const user = await currentUser();
-    console.log(user);
-
     return (
         <UiMainContainer>
             <AccountHead />
-            <AccountInfo user={user} />
+            <AccountInfo />
             <AccountSubscribe />
         </UiMainContainer>
     );

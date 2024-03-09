@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 
 import { subscribeExtend } from "@/actions/subscribe";
+import { useAuth } from "@/contexts/auth-context";
 
 import { Button } from "@/components/ui/button";
 import { UiHeadingFourth } from "@/components/uikit/heading";
@@ -12,7 +13,8 @@ import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiDivider } from "@/components/uikit/ui-divider";
 
-export function AccountInfo({ user }) {
+export function AccountInfo() {
+    const { user } = useAuth();
     const [isPending, startTransition] = useTransition();
 
     const handleSubscribeExtend = () => {

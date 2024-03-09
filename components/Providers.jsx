@@ -1,15 +1,14 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
-
+import { AuthProvider } from "@/contexts/auth-context";
 import { AuthNavigateContextProvider } from "@/contexts/auth-navigate-context";
 
 export const Providers = ({ children }) => {
     return (
-        <SessionProvider>
+        <AuthProvider>
             <AuthNavigateContextProvider>
                 {children}
             </AuthNavigateContextProvider>
-        </SessionProvider>
+        </AuthProvider>
     );
 };

@@ -3,24 +3,27 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 
+import { useAuth } from "@/contexts/auth-context";
 import { LoginSchema } from "@/schemas";
+import { login } from "@/actions/login";
+import localStorageService from "@/services/local-storage-service";
+
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/auth/form-error";
+import { FormSuccess } from "@/components/auth/form-success";
 import { InputField } from "@/components/auth/ui/input-field";
 
-import { login } from "@/actions/login";
-
 export function LoginForm({ onClickBackButton, onCloseModal }) {
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl");
     const router = useRouter();
+    const { setUser } = useAuth();
 
     const [captcha, setCaptcha] = useState(undefined);
+    const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const [isPending, startTransition] = useTransition();
 
@@ -34,10 +37,11 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
 
     const onSubmit = (values) => {
         if (captcha) {
+            setSuccess("");
             setError("");
 
             startTransition(async () => {
-                const data = await login(values, callbackUrl);
+                const data = await login(values);
 
                 if (data?.error) {
                     setError(data.error);
@@ -45,10 +49,23 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                 }
 
                 if (data?.success) {
+                    setSuccess(data?.success);
+                    setUser({
+                        username: data.username,
+                        subscriptionEnd: data.subscriptionEnd,
+                    });
+                    localStorageService.setTokens({
+                        username: data.username,
+                        subscriptionEnd: data.subscriptionEnd,
+                        accessToken: data.accessToken,
+                        expiresIn: data.expiresIn,
+                    });
                     form.resetField("username");
                     form.resetField("password");
+
                     onCloseModal();
-                    // router.push("/account");
+
+                    router.push("/account");
                 }
             });
         }
@@ -96,6 +113,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                         }
                         error={form.formState.errors["password"]}
                     />
+                    <FormSuccess message={success} />
                     <FormError message={error} />
                     <ReCAPTCHA
                         sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}

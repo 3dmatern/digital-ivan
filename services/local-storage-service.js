@@ -11,51 +11,37 @@ export function setTokens({
     expiresIn,
     subscriptionEnd,
 }) {
-    if (typeof window !== "undefined") {
-        localStorage.setItem(USERNAME_KEY, username);
-        localStorage.setItem(TOKEN_KEY, accessToken);
-        localStorage.setItem(EXPIRES_KEY, expiresIn);
-        localStorage.setItem(SUBSCRIBE_KEY, subscriptionEnd);
-    }
+    localStorage.setItem(USERNAME_KEY, username);
+    localStorage.setItem(SUBSCRIBE_KEY, subscriptionEnd);
+    localStorage.setItem(TOKEN_KEY, accessToken);
+    localStorage.setItem(EXPIRES_KEY, expiresIn);
 }
 
 export function setSubscriptionEnd(payload) {
-    if (typeof window !== "undefined") {
-        localStorage.setItem(SUBSCRIBE_KEY, payload);
-    }
+    localStorage.setItem(SUBSCRIBE_KEY, payload);
 }
 
 export function getAccessToken() {
-    if (typeof window !== "undefined") {
-        return localStorage.getItem(TOKEN_KEY);
-    }
+    return localStorage.getItem(TOKEN_KEY);
 }
 
 export function getTokenExpiresDate() {
-    if (typeof window !== "undefined") {
-        return localStorage.getItem(EXPIRES_KEY);
-    }
+    return localStorage.getItem(EXPIRES_KEY);
 }
 
 export function getUsername() {
-    if (typeof window !== "undefined") {
-        return localStorage.getItem(USERNAME_KEY);
-    }
+    return localStorage.getItem(USERNAME_KEY);
 }
 
 export function getSubscriptionEnd() {
-    if (typeof window !== "undefined") {
-        return localStorage.getItem(SUBSCRIBE_KEY);
-    }
+    return localStorage.getItem(SUBSCRIBE_KEY);
 }
 
 export function removeAuthData() {
-    if (typeof window !== "undefined") {
-        localStorage.removeItem(USERNAME_KEY);
-        localStorage.removeItem(TOKEN_KEY);
-        localStorage.removeItem(EXPIRES_KEY);
-        localStorage.removeItem(SUBSCRIBE_KEY);
-    }
+    localStorage.removeItem(USERNAME_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(EXPIRES_KEY);
+    localStorage.removeItem(SUBSCRIBE_KEY);
 }
 
 const localStorageService = {

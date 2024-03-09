@@ -1,10 +1,9 @@
 "use client";
 
 import { useContext } from "react";
-import { useSession } from "next-auth/react";
-
 import { cn } from "@/lib/utils";
 
+import { useAuth } from "@/contexts/auth-context";
 import { AuthNavigateContext } from "@/contexts/auth-navigate-context";
 
 import { UiHeader } from "@/components/uikit/ui-header";
@@ -16,9 +15,6 @@ import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
 import { AuthNavigate } from "@/components/auth/auth-navigate";
 
 export function Navigate() {
-    const session = useSession();
-    console.log(session);
-
     const {
         verifiedToken,
         resetToken,
@@ -30,6 +26,7 @@ export function Navigate() {
         onOpenModal,
         onCloseModal,
     } = useContext(AuthNavigateContext);
+    const { user, onLogout } = useAuth();
 
     return (
         <UiHeader
@@ -73,13 +70,14 @@ export function Navigate() {
                         <AuthNavigate
                             verifiedToken={verifiedToken}
                             resetToken={resetToken}
-                            isAuth={session?.data}
+                            isAuth={user}
                             isActive={isActiveMobMenu}
                             typeForm={typeForm}
                             isOpen={isOpen}
                             onOpenModal={onOpenModal}
                             onCloseModal={onCloseModal}
                             onCloseMenu={onCloseMenu}
+                            onLogout={onLogout}
                         />
                     </AuthLinks>
                 }

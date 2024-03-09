@@ -1,12 +1,11 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
-import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 
+import { Providers } from "@/components/providers";
 import { Navigate } from "@/components/navigate";
 import { Footer } from "@/components/footer";
-import { Providers } from "@/components/Providers";
 
 export const dynamic = "force-dynamic";
 
@@ -22,9 +21,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-    const session = await auth();
-    console.log("RootLayout: ", session);
-
     return (
         <html lang="ru">
             <body

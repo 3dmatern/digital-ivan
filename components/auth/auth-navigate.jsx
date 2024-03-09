@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { signOut } from "@/auth";
 
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiModal } from "@/components/uikit/ui-modal";
@@ -21,6 +20,7 @@ export function AuthNavigate({
     onOpenModal,
     onCloseModal,
     onCloseMenu,
+    onLogout,
 }) {
     const getContentModal = () => {
         switch (typeForm) {
@@ -84,11 +84,10 @@ export function AuthNavigate({
                     <UiLink
                         href="#"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.preventDefault();
                             onCloseMenu();
-                            signOut({
-                                callbackUrl: "/",
-                            });
+                            onLogout();
                         }}
                     >
                         Выйти
