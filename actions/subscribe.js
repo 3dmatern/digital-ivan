@@ -1,18 +1,13 @@
-"use client";
+"use server";
 
 import httpService from "@/services/http-service";
-import localStorageService from "@/services/local-storage-service";
 
-const HEADERS = {
-    headers: {
-        Authorization: `Bearer ${localStorageService.getAccessToken()}`,
-        "Content-Type": "application/json",
-    },
-};
-
-export const getSubscribe = async () => {
+export const getSubscribe = async (accessToken) => {
     try {
-        const { data } = await httpService.get("get_subscribe", HEADERS);
+        const { data } = await httpService.get(
+            "get_subscribe",
+            generateHeaders(accessToken)
+        );
         console.log(data);
 
         return {
@@ -27,32 +22,24 @@ export const getSubscribe = async () => {
     }
 };
 
-export const subscribeExtend = async () => {
+export const subscribeExtend = async (accessToken) => {
     try {
-        // const { data } = await httpService.post(
-        //     'extend_subscription',
-        //     {
-        //         months: 1,
-        //     },
-        //     HEADERS
-        // );
-        // console.log(data);
-
-        fetch("http://niko-translate-web.ru/extend_subscription", {
-            method: "post",
-            body: JSON.stringify({
+        const { data } = await httpService.post(
+            "extend_subscription",
+            {
                 months: 1,
-            }),
-            headers: HEADERS.headers,
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((er) => console.error(er));
-
-        // localStorageService.updSubscribe(month);
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        console.log("data", data);
 
         return {
-            success: true,
+            success: data.message,
         };
     } catch (error) {
         if (error?.code === "ERR_NETWORK") {
@@ -63,7 +50,7 @@ export const subscribeExtend = async () => {
 
         if (error.code === "ERR_BAD_REQUEST") {
             return {
-                error: error?.response?.data?.message,
+                error: error?.response?.data?.msg,
             };
         }
 
@@ -72,3 +59,12 @@ export const subscribeExtend = async () => {
         };
     }
 };
+
+function generateHeaders(token) {
+    return {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+    };
+}

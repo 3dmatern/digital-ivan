@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 
 import { subscribeExtend } from "@/actions/subscribe";
@@ -12,21 +12,32 @@ import { UiDivContainer } from "@/components/uikit/ui-div-container";
 import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiDivider } from "@/components/uikit/ui-divider";
+import localStorageService from "@/services/local-storage-service";
+import { FormSuccess } from "@/components/auth/form-success";
+import { FormError } from "@/components/auth/form-error";
 
 export function AccountInfo() {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
     const [isPending, startTransition] = useTransition();
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
 
     const handleSubscribeExtend = () => {
-        startTransition(() => {
-            const data = subscribeExtend();
+        setSuccess("");
+        setError("");
 
-            if (data.error) {
-                console.error(data.error);
+        startTransition(async () => {
+            const accessToken = localStorageService.getAccessToken();
+            const data = await subscribeExtend(accessToken);
+
+            if (data?.error) {
+                setError(data.error);
             }
 
-            if (data.success) {
-                console.log(data.success);
+            if (data?.success) {
+                setSuccess(data.success);
+                localStorageService.setSubscriptionEnd("2024-04-10");
+                setUser((prev) => ({ ...prev, subscriptionEnd: "2024-04-10" }));
             }
         });
     };
@@ -40,6 +51,8 @@ export function AccountInfo() {
                         subscriptionEnd={user?.subscriptionEnd}
                         isPending={isPending}
                         onSubscribeExtend={handleSubscribeExtend}
+                        success={success}
+                        error={error}
                     />
                     <UiDivider className="hidden md:block" />
                     <AccountInfoApp />
@@ -62,6 +75,8 @@ function AccountInfoUser({
     subscriptionEnd,
     isPending,
     onSubscribeExtend,
+    success,
+    error,
 }) {
     return (
         <div className=" flex flex-col gap-6 text-white">
@@ -73,7 +88,10 @@ function AccountInfoUser({
                 </p>
             </div>
 
+            <FormSuccess message={success} />
+            <FormError message={error} />
             <Button
+                type="button"
                 onClick={onSubscribeExtend}
                 disabled={isPending}
                 className="w-max"

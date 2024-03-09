@@ -14,8 +14,8 @@ import localStorageService from "@/services/local-storage-service";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
+import { FormError } from "@/components/auth/form-error";
 import { InputField } from "@/components/auth/ui/input-field";
 
 export function LoginForm({ onClickBackButton, onCloseModal }) {
