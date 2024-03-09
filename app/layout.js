@@ -1,14 +1,12 @@
-import { SessionProvider } from "next-auth/react";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
 import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 
-import { AuthNavigateContextProvider } from "@/contexts/auth-navigate-context";
-
 import { Navigate } from "@/components/navigate";
 import { Footer } from "@/components/footer";
+import { Providers } from "@/components/Providers";
 
 export const dynamic = "force-dynamic";
 
@@ -35,14 +33,12 @@ export default async function RootLayout({ children }) {
                     roboto.className
                 )}
             >
-                <SessionProvider session={session}>
-                    <AuthNavigateContextProvider>
-                        <Navigate />
-                        {children}
-                        <Footer />
-                        <div id="modals" />
-                    </AuthNavigateContextProvider>
-                </SessionProvider>
+                <Providers>
+                    <Navigate />
+                    {children}
+                    <Footer />
+                    <div id="modals" />
+                </Providers>
             </body>
         </html>
     );

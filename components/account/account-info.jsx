@@ -34,8 +34,8 @@ export function AccountInfo({ user }) {
             <UiDivContainer className="pt-6 pb-14 lg:pt-10 lg:pb-[158px]">
                 <AccountInfoBody>
                     <AccountInfoUser
-                        username={user.username}
-                        subscriptionEnd={user.subscriptionEnd}
+                        username={user?.username}
+                        subscriptionEnd={user?.subscriptionEnd}
                         isPending={isPending}
                         onSubscribeExtend={handleSubscribeExtend}
                     />

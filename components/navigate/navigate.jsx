@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext } from "react";
+import { useSession } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
 
@@ -15,11 +16,13 @@ import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
 import { AuthNavigate } from "@/components/auth/auth-navigate";
 
 export function Navigate() {
+    const session = useSession();
+    console.log(session);
+
     const {
         verifiedToken,
         resetToken,
-        isAuth,
-        isActive,
+        isActiveMobMenu,
         typeForm,
         isOpen,
         onOpenMenu,
@@ -35,30 +38,30 @@ export function Navigate() {
                     w-full flex items-center
                     absolute top-0 left-0 z-10
                 `,
-                isActive && `h-screen`
+                isActiveMobMenu && `h-screen`
             )}
         >
             <NavigateContainer
                 logo={<Logo onClick={onCloseMenu} />}
                 links={
-                    <NavigateLinks isActive={isActive}>
+                    <NavigateLinks isActive={isActiveMobMenu}>
                         <UiLink
                             href="#"
-                            className={isActive && "text-2xl"}
+                            className={isActiveMobMenu && "text-2xl"}
                             onClick={onCloseMenu}
                         >
                             Преимущества
                         </UiLink>
                         <UiLink
                             href="#"
-                            className={isActive && "text-2xl"}
+                            className={isActiveMobMenu && "text-2xl"}
                             onClick={onCloseMenu}
                         >
                             Как это работает?
                         </UiLink>
                         <UiLink
                             href="/about-app"
-                            className={isActive && "text-2xl"}
+                            className={isActiveMobMenu && "text-2xl"}
                             onClick={onCloseMenu}
                         >
                             О приложении
@@ -66,12 +69,12 @@ export function Navigate() {
                     </NavigateLinks>
                 }
                 auth={
-                    <AuthLinks isActive={isActive}>
+                    <AuthLinks isActive={isActiveMobMenu}>
                         <AuthNavigate
                             verifiedToken={verifiedToken}
                             resetToken={resetToken}
-                            isAuth={isAuth}
-                            isActive={isActive}
+                            isAuth={session?.data}
+                            isActive={isActiveMobMenu}
                             typeForm={typeForm}
                             isOpen={isOpen}
                             onOpenModal={onOpenModal}
@@ -80,8 +83,13 @@ export function Navigate() {
                         />
                     </AuthLinks>
                 }
-                menu={<MenuButton isActive={isActive} onClick={onOpenMenu} />}
-                className={cn("", isActive && `h-screen items-start `)}
+                menu={
+                    <MenuButton
+                        isActive={isActiveMobMenu}
+                        onClick={onOpenMenu}
+                    />
+                }
+                className={cn("", isActiveMobMenu && `h-screen items-start `)}
             />
         </UiHeader>
     );
@@ -102,14 +110,14 @@ function NavigateContainer({ className, logo, links, auth, menu }) {
     );
 }
 
-function NavigateLinks({ isActive, children }) {
+function NavigateLinks({ isActiveMobMenu, children }) {
     return (
         <div
             className={cn(
                 `
                     hidden md:flex text-start gap-4
                 `,
-                isActive && "flex flex-col absolute top-[84px]"
+                isActiveMobMenu && "flex flex-col absolute top-[84px]"
             )}
         >
             {children}
@@ -117,14 +125,14 @@ function NavigateLinks({ isActive, children }) {
     );
 }
 
-function AuthLinks({ isActive, children }) {
+function AuthLinks({ isActiveMobMenu, children }) {
     return (
         <div
             className={cn(
                 `
                     hidden md:flex text-start gap-8
                 `,
-                isActive && "flex flex-col gap-6 absolute bottom-14"
+                isActiveMobMenu && "flex flex-col gap-6 absolute bottom-14"
             )}
         >
             {children}
@@ -132,7 +140,7 @@ function AuthLinks({ isActive, children }) {
     );
 }
 
-function MenuButton({ isActive, onClick }) {
+function MenuButton({ isActiveMobMenu, onClick }) {
     return (
         <Button
             type="button"
@@ -145,7 +153,7 @@ function MenuButton({ isActive, onClick }) {
                     active:bg-transparent
             `}
         >
-            {isActive ? <UiCrossIcon /> : <UiMenuIcon />}
+            {isActiveMobMenu ? <UiCrossIcon /> : <UiMenuIcon />}
         </Button>
     );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { signOut } from "@/auth";
 
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiModal } from "@/components/uikit/ui-modal";
@@ -81,9 +82,14 @@ export function AuthNavigate({
                         Личный кабинет
                     </UiLink>
                     <UiLink
-                        href="/"
+                        href="#"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={onCloseMenu}
+                        onClick={() => {
+                            onCloseMenu();
+                            signOut({
+                                callbackUrl: "/",
+                            });
+                        }}
                     >
                         Выйти
                     </UiLink>

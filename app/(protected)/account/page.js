@@ -13,6 +13,7 @@ export const metadata = {
 
 export default async function AccountAppPage() {
     const user = await currentUser();
+    console.log(user);
 
     return (
         <UiMainContainer>

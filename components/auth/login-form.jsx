@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { LoginSchema } from "@/schemas";
@@ -16,6 +16,8 @@ import { InputField } from "@/components/auth/ui/input-field";
 import { login } from "@/actions/login";
 
 export function LoginForm({ onClickBackButton, onCloseModal }) {
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl");
     const router = useRouter();
 
     const [captcha, setCaptcha] = useState(undefined);
@@ -35,7 +37,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
             setError("");
 
             startTransition(async () => {
-                const data = await login(values);
+                const data = await login(values, callbackUrl);
 
                 if (data?.error) {
                     setError(data.error);

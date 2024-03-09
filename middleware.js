@@ -13,16 +13,10 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
-    const isAuthRoute =
-        !!nextUrl.searchParams.get("auth") ||
-        !!nextUrl.searchParams.get("reset");
-
+    console.log("isLoggedIn", isLoggedIn);
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-    // const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
-    console.log("22: ", nextUrl.searchParams.get("auth"));
-    console.log("23: ", isAuthRoute);
+    const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
     if (isApiAuthRoute) {
         return null;
@@ -30,7 +24,6 @@ export default auth((req) => {
 
     if (isAuthRoute) {
         if (isLoggedIn) {
-            console.log("isAuthRoute, isLoggedIn");
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
         }
         return null;
@@ -52,7 +45,7 @@ export default auth((req) => {
     return null;
 });
 
-// Необязательно, не вызывайте промежуточное программное обеспечение на некоторых путях
+// Optionally, don't invoke Middleware on some paths
 export const config = {
     matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

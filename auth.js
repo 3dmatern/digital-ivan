@@ -9,25 +9,50 @@ export const {
     signIn,
     signOut,
 } = NextAuth({
-    pages: {
-        signIn: "/?auth=login",
-        error: "/?auth=error",
-    },
     callbacks: {
+        async signIn({ user }) {
+            console.log("signIn: ", user);
+
+            // Запретить вход без подтверждения электронной почты
+            if (!user) {
+                return false;
+            }
+
+            return true;
+        },
+        async session({ token, session }) {
+            if (token.sub && session.user) {
+                session.user.id = token.sub;
+            }
+
+            if (token.role && session.user) {
+                session.user.role = token.role;
+            }
+
+            if (session.user) {
+                session.user.nickname = token.nickname;
+                session.user.email = token.email;
+            }
+
+            return session;
+        },
         async jwt({ token, user }) {
-            console.log("jwt: ", token, user);
-            if (!token.sub || !user?.access_token) return null;
+            if (!token.sub) return null;
+            if (!user) return null;
+            if (!user.access_token) return null;
 
             const {
                 sub: username,
-                exp: tokenExp,
+                exp,
                 subscription_end: subscriptionEnd,
-            } = await parseToken(user?.access_token);
+            } = await parseToken(user.access_token);
+
+            token.exp = exp;
 
             // Получаем текущее время в секундах
             const currentTimeInSeconds = Math.floor(Date.now() / 1000);
             // Проверяем, истек ли токен
-            const isTokenExpired = tokenExp <= currentTimeInSeconds;
+            const isTokenExpired = token.exp <= currentTimeInSeconds;
 
             if (isTokenExpired) {
                 return null;
@@ -40,6 +65,8 @@ export const {
             return token;
         },
     },
-    session: { strategy: "jwt" },
+    secret: "super",
+    trustHost: true,
+
     ...authConfig,
 });
