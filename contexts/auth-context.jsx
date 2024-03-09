@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
 
     const handleLogout = () => {
         localStorageService.removeAuthData();
+        setUser(null);
         router.push("/");
         return;
     };
