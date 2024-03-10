@@ -70,7 +70,7 @@ export function LoginForm({ onCloseModal }) {
                     <InputField
                         form={form}
                         name="username"
-                        label="Введите имя пользователя"
+                        label="Имя пользователя"
                         type="text"
                         isPending={isPending}
                         error={form.formState.errors["username"]}
@@ -79,7 +79,7 @@ export function LoginForm({ onCloseModal }) {
                     <InputField
                         form={form}
                         name="password"
-                        label="Введите пароль"
+                        label="Пароль"
                         type="password"
                         isPending={isPending}
                         placeholder="******"
