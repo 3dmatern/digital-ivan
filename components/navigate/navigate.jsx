@@ -104,14 +104,14 @@ function NavigateContainer({ className, logo, links, auth, menu }) {
     );
 }
 
-function NavigateLinks({ isActiveMobMenu, children }) {
+function NavigateLinks({ isActive, children }) {
     return (
         <div
             className={cn(
                 `
                     hidden md:flex text-start gap-4
                 `,
-                isActiveMobMenu && "flex flex-col absolute top-[84px]"
+                isActive && "flex flex-col absolute top-[84px]"
             )}
         >
             {children}
@@ -119,14 +119,14 @@ function NavigateLinks({ isActiveMobMenu, children }) {
     );
 }
 
-function AuthLinks({ isActiveMobMenu, children }) {
+function AuthLinks({ isActive, children }) {
     return (
         <div
             className={cn(
                 `
                     hidden md:flex text-start gap-8
                 `,
-                isActiveMobMenu && "flex flex-col gap-6 absolute bottom-14"
+                isActive && "flex flex-col gap-6 absolute bottom-14"
             )}
         >
             {children}
@@ -134,7 +134,7 @@ function AuthLinks({ isActiveMobMenu, children }) {
     );
 }
 
-function MenuButton({ isActiveMobMenu, onClick }) {
+function MenuButton({ isActive, onClick }) {
     return (
         <Button
             type="button"
@@ -147,7 +147,7 @@ function MenuButton({ isActiveMobMenu, onClick }) {
                     active:bg-transparent
             `}
         >
-            {isActiveMobMenu ? <UiCrossIcon /> : <UiMenuIcon />}
+            {isActive ? <UiCrossIcon /> : <UiMenuIcon />}
         </Button>
     );
 }
