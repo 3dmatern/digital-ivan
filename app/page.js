@@ -1,8 +1,6 @@
 "use client";
 
-import { useContext } from "react";
-
-import { AuthNavigateContext } from "@/contexts/auth-navigate-context";
+import { useAuth } from "@/contexts/auth-context";
 
 import {
     HomeHead,
@@ -13,7 +11,7 @@ import {
 import { UiMainContainer } from "@/components/uikit/ui-main-container";
 
 export default function HomePage() {
-    const { onOpenModal } = useContext(AuthNavigateContext);
+    const { onOpenModal } = useAuth();
 
     return (
         <UiMainContainer>

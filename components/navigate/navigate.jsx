@@ -1,10 +1,8 @@
 "use client";
 
-import { useContext } from "react";
 import { cn } from "@/lib/utils";
 
 import { useAuth } from "@/contexts/auth-context";
-import { AuthNavigateContext } from "@/contexts/auth-navigate-context";
 
 import { UiHeader } from "@/components/uikit/ui-header";
 import { Logo } from "@/components/logo";
@@ -16,6 +14,8 @@ import { AuthNavigate } from "@/components/auth/auth-navigate";
 
 export function Navigate() {
     const {
+        user,
+        onLogout,
         verifiedToken,
         resetToken,
         isActiveMobMenu,
@@ -25,8 +25,7 @@ export function Navigate() {
         onCloseMenu,
         onOpenModal,
         onCloseModal,
-    } = useContext(AuthNavigateContext);
-    const { user, onLogout } = useAuth();
+    } = useAuth();
 
     return (
         <UiHeader
