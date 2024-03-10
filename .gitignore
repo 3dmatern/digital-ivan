@@ -17,6 +17,7 @@
 /build
 .env
 *docx
+*rar
 
 # misc
 .DS_Store

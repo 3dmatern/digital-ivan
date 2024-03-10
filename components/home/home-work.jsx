@@ -1,4 +1,4 @@
-import workImage from "@/public/main-bg-work.png";
+import workImage from "@/public/main-bg-work.webp";
 
 import { WORKS_DATA } from "@/components/home/constants";
 

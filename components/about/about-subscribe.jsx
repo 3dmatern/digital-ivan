@@ -10,9 +10,9 @@ export function AboutSubscribe() {
     return (
         <UiSectionWrapper
             className={`
-                bg-[linear-gradient(to_bottom,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/about-bg-subscribe.png')]
+                bg-[linear-gradient(to_bottom,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/about-bg-subscribe.webp')]
                 bg-no-repeat bg-[top_left_-30rem] bg-[length:1425px]
-                md:bg-[linear-gradient(to_left,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/about-bg-subscribe.png')]
+                md:bg-[linear-gradient(to_left,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/about-bg-subscribe.webp')]
                 md:bg-[top_right_-30rem] xl:bg-[length:100%]
             `}
         >

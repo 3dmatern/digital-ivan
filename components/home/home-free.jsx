@@ -9,9 +9,9 @@ export function HomeFree() {
     return (
         <UiSectionWrapper
             className={`
-                bg-[linear-gradient(to_bottom,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.png')]
+                bg-[linear-gradient(to_bottom,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.webp')]
                 bg-no-repeat bg-[top_left_-23.5rem] bg-[length:1200px]
-                md:bg-[linear-gradient(to_left,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.png')]
+                md:bg-[linear-gradient(to_left,rgba(13,16,40,0.2),rgba(13,16,40,1)),url('/main-bg-free.webp')]
                 md:bg-right-top xl:bg-[length:100%]
             `}
         >

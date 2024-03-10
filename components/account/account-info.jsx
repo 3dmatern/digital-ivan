@@ -116,7 +116,7 @@ function AccountInfoApp() {
                     Скачивая переводчик вы соглашаетесь с условиями договора
                     Лицензии-оферты,{" "}
                     <UiLink
-                        href="/next.svg"
+                        href="/about.txt"
                         variant="reverse"
                         download={true}
                         target="_blank"
@@ -128,7 +128,7 @@ function AccountInfoApp() {
             </div>
 
             <Button asChild variant="outline" className="w-max">
-                <Link href="/vercel.svg" target="_blank" download>
+                <Link href="/about.txt" target="_blank" download>
                     Скачать переводчик
                 </Link>
             </Button>
