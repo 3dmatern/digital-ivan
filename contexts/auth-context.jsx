@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
     const resetToken = searchParams.get("reset");
 
     const [user, setUser] = useState(null);
+    const [isAuth, setIsAuth] = useState(false);
     const [isActiveMobMenu, setIsActiveMobMenu] = useState(false);
     const [isModal, setIsModal] = useState({
         isOpen: false,
@@ -55,6 +56,28 @@ export function AuthProvider({ children }) {
         }
     }, [resetToken, verifiedToken]);
 
+    useEffect(() => {
+        const accessToken = localStorageService.getAccessToken();
+        const username = localStorageService.getUsername();
+        const subscriptionEnd = localStorageService.getSubscriptionEnd();
+
+        const isToken = !accessToken || accessToken === "undefined";
+        const isUsername = !username || username === "undefined";
+        const isSubscription =
+            !subscriptionEnd || subscriptionEnd === "undefined";
+
+        if (isToken || isUsername || isSubscription) {
+            setIsAuth((prev) => false);
+            return;
+        }
+
+        setUser((prev) => ({
+            username,
+            subscriptionEnd,
+        }));
+        setIsAuth((prev) => true);
+    }, [router]);
+
     const handleSetUser = useCallback((currentUser) => {
         setUser((prev) => ({ ...prev, ...currentUser }));
     }, []);
@@ -85,6 +108,7 @@ export function AuthProvider({ children }) {
     return (
         <AuthContext.Provider
             value={{
+                isAuth,
                 user,
                 onSetUser: handleSetUser,
                 onLogout: handleLogout,
