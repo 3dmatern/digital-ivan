@@ -20,7 +20,7 @@ import { InputField } from "@/components/auth/ui/input-field";
 
 export function LoginForm({ onClickBackButton, onCloseModal }) {
     const router = useRouter();
-    const { setUser } = useAuth();
+    const { onSetUser } = useAuth();
 
     const [captcha, setCaptcha] = useState(undefined);
     const [success, setSuccess] = useState("");
@@ -50,7 +50,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
 
                 if (data?.success) {
                     setSuccess(data?.success);
-                    setUser({
+                    onSetUser({
                         username: data.username,
                         subscriptionEnd: data.subscriptionEnd,
                     });

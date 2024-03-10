@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import localStorageService from "@/services/local-storage-service";
@@ -11,26 +11,9 @@ export function AuthProvider({ children }) {
     const router = useRouter();
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const accessToken = localStorageService.getAccessToken();
-        const username = localStorageService.getUsername();
-        const subscriptionEnd = localStorageService.getSubscriptionEnd();
-
-        const isToken = !accessToken || accessToken === "undefined";
-        const isUsername = !username || username === "undefined";
-        const isSubscription =
-            !subscriptionEnd || subscriptionEnd === "undefined";
-
-        if (isToken || isUsername || isSubscription) {
-            router.push("/?auth=login");
-            return;
-        }
-
-        setUser({
-            username,
-            subscriptionEnd,
-        });
-    }, [router]);
+    const handleSetUser = useCallback((currentUser) => {
+        setUser((prev) => ({ ...prev, ...currentUser }));
+    }, []);
 
     const handleLogout = () => {
         localStorageService.removeAuthData();
@@ -40,7 +23,9 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, setUser, onLogout: handleLogout }}>
+        <AuthContext.Provider
+            value={{ user, onSetUser: handleSetUser, onLogout: handleLogout }}
+        >
             {children}
         </AuthContext.Provider>
     );

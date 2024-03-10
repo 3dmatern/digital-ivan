@@ -17,7 +17,7 @@ import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
 export function AccountInfo() {
-    const { user, setUser } = useAuth();
+    const { user, onSetUser } = useAuth();
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
@@ -36,8 +36,12 @@ export function AccountInfo() {
 
             if (data?.success) {
                 setSuccess(data.success);
-                localStorageService.setSubscriptionEnd("2024-04-10");
-                setUser((prev) => ({ ...prev, subscriptionEnd: "2024-04-10" }));
+                localStorageService.setSubscriptionEnd(data.subscriptionEnd);
+                onSetUser({
+                    ...user,
+                    username: data.username,
+                    subscriptionEnd: data.subscriptionEnd,
+                });
             }
         });
     };
