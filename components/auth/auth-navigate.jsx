@@ -16,6 +16,7 @@ export function AuthNavigate({
     isActive,
     typeForm,
     isOpen,
+    onOpenModal,
     onCloseModal,
     onCloseMenu,
 }) {
@@ -68,14 +69,20 @@ export function AuthNavigate({
                     <UiLink
                         href="/?auth=register"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={onCloseMenu}
+                        onClick={() => {
+                            onCloseMenu();
+                            onOpenModal("register");
+                        }}
                     >
                         Регистрация
                     </UiLink>
                     <UiLink
                         href="/?auth=login"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={onCloseMenu}
+                        onClick={() => {
+                            onCloseMenu();
+                            onOpenModal("login");
+                        }}
                     >
                         Вход
                     </UiLink>

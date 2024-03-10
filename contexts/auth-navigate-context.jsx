@@ -59,10 +59,7 @@ export function AuthNavigateProvider({ children }) {
         setIsModal((prev) => ({ ...prev, isOpen: true, typeForm: type }));
     };
 
-    const handleCloseModal = (isBackRoute = true) => {
-        if (isBackRoute) {
-            router.back();
-        }
+    const handleCloseModal = () => {
         setIsModal((prev) => ({ ...prev, isOpen: false, typeForm: null }));
     };
 
