@@ -52,7 +52,7 @@ export function NewPasswordForm({ resetToken }) {
                     <InputField
                         form={form}
                         name="password"
-                        label="Введите пароль"
+                        label="Пароль"
                         type="password"
                         isPending={isPending}
                         error={form.formState.errors["password"]}
