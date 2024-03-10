@@ -55,7 +55,7 @@ export function ResetForm() {
                     <InputField
                         form={form}
                         name="email"
-                        label="Введите почту"
+                        label="Почта"
                         type="email"
                         isPending={isPending}
                         placeholder="jhon.doe@example.com"
