@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
@@ -14,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UiDangerIcon } from "@/components/uikit/icons/ui-danger-icon";
-import { Button } from "@/components/ui/button";
 
 export function InputField({
     className,
@@ -44,7 +42,7 @@ export function InputField({
     const getLabelTextClassName = () => {
         let className = "";
 
-        if (isFocus) {
+        if (isFocus || form.getValues(name)) {
             className += " absolute -top-1.5 -translate-y-0 text-xs bg-white";
         }
 
