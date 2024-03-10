@@ -13,8 +13,7 @@ export function CardWrapper({
     children,
     headerLabel,
     backButtonLabel,
-    onClickBackButton,
-    onCloseModal,
+    backButtonHref,
 }) {
     return (
         <Card className="max-w-96 w-full px-5 border-none rounded-none shadow-none">
@@ -25,16 +24,8 @@ export function CardWrapper({
             </CardHeader>
             <CardContent className="p-0">{children}</CardContent>
             <CardFooter className="p-0 pt-4">
-                <BackButton
-                    href="/"
-                    label="На главную"
-                    onClick={onCloseModal}
-                />
-                <BackButton
-                    href="/"
-                    label={backButtonLabel}
-                    onClick={onClickBackButton}
-                />
+                <BackButton href="/" label="На главную" />
+                <BackButton href={backButtonHref} label={backButtonLabel} />
             </CardFooter>
         </Card>
     );

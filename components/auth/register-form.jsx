@@ -15,7 +15,7 @@ import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import { InputField } from "@/components/auth/ui/input-field";
 
-export function RegisterForm({ onClickBackButton, onCloseModal }) {
+export function RegisterForm() {
     const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -54,8 +54,7 @@ export function RegisterForm({ onClickBackButton, onCloseModal }) {
         <CardWrapper
             headerLabel="Регистрация"
             backButtonLabel="Уже есть аккаунт?"
-            onClickBackButton={() => onClickBackButton("login")}
-            onCloseModal={onCloseModal}
+            backButtonHref="/?auth=login"
         >
             <Form {...form}>
                 <form

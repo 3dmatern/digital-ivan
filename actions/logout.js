@@ -1,7 +1,13 @@
-"use client";
+"use server";
 
-import localStorageService from "@/services/local-storage-service";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const logout = () => {
-    localStorageService.removeAuthData();
+    cookies().delete("username");
+    cookies().delete("subscriptionEnd");
+    cookies().delete("accessToken");
+    cookies().delete("expiresIn");
+
+    redirect("/");
 };

@@ -1,6 +1,5 @@
-"use client";
-
 import { cn } from "@/lib/utils";
+import { logout } from "@/actions/logout";
 
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiModal } from "@/components/uikit/ui-modal";
@@ -17,50 +16,21 @@ export function AuthNavigate({
     isActive,
     typeForm,
     isOpen,
-    onOpenModal,
     onCloseModal,
     onCloseMenu,
-    onLogout,
 }) {
     const getContentModal = () => {
         switch (typeForm) {
             case "register":
-                return (
-                    <RegisterForm
-                        onClickBackButton={onOpenModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <RegisterForm />;
             case "login":
-                return (
-                    <LoginForm
-                        onClickBackButton={onOpenModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <LoginForm onCloseModal={onCloseModal} />;
             case "verified":
-                return (
-                    <NewVerificationForm
-                        verifiedToken={verifiedToken}
-                        onClickBackButton={onOpenModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <NewVerificationForm verifiedToken={verifiedToken} />;
             case "reset-password":
-                return (
-                    <ResetForm
-                        onClickBackButton={onOpenModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <ResetForm />;
             case "new-password":
-                return (
-                    <NewPasswordForm
-                        resetToken={resetToken}
-                        onClickBackButton={onOpenModal}
-                        onCloseModal={onCloseModal}
-                    />
-                );
+                return <NewPasswordForm resetToken={resetToken} />;
             default:
                 return;
         }
@@ -87,7 +57,7 @@ export function AuthNavigate({
                         onClick={(e) => {
                             e.preventDefault();
                             onCloseMenu();
-                            onLogout();
+                            logout();
                         }}
                     >
                         Выйти

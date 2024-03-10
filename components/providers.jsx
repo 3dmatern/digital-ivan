@@ -1,7 +1,7 @@
 "use client";
 
-import { AuthProvider } from "@/contexts/auth-context";
+import { AuthNavigateProvider } from "@/contexts/auth-navigate-context";
 
 export const Providers = ({ children }) => {
-    return <AuthProvider>{children}</AuthProvider>;
+    return <AuthNavigateProvider>{children}</AuthNavigateProvider>;
 };

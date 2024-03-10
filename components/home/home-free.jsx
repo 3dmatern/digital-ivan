@@ -1,9 +1,11 @@
-import { Button } from "../ui/button";
-import { UiHeadingSecond } from "../uikit/heading";
-import { UiDivContainer } from "../uikit/ui-div-container";
-import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
+import Link from "next/link";
 
-export function HomeFree({ onOpenModal }) {
+import { Button } from "@/components/ui/button";
+import { UiHeadingSecond } from "@/components/uikit/heading";
+import { UiDivContainer } from "@/components/uikit/ui-div-container";
+import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
+
+export function HomeFree() {
     return (
         <UiSectionWrapper
             className={`
@@ -23,12 +25,8 @@ export function HomeFree({ onOpenModal }) {
                     description="Зарегистрируйся и получи 2 дня подписки абсолютно
                         бесплатно"
                 />
-                <Button
-                    type="button"
-                    onClick={() => onOpenModal("register")}
-                    className="w-max"
-                >
-                    Регистрация
+                <Button asChild type="button" className="w-max">
+                    <Link href="/?auth=register">Регистрация</Link>
                 </Button>
             </UiDivContainer>
         </UiSectionWrapper>

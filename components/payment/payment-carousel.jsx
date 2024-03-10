@@ -46,11 +46,6 @@ export function PaymentCarousel() {
             if (data?.success) {
                 setSuccess(data.success);
                 localStorageService.setSubscriptionEnd(data.subscriptionEnd);
-                onSetUser({
-                    ...user,
-                    username: data.username,
-                    subscriptionEnd: data.subscriptionEnd,
-                });
             }
         });
     };

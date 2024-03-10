@@ -1,9 +1,11 @@
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiDivContainer } from "@/components/uikit/ui-div-container";
 import { UiHeadingFirst } from "@/components/uikit/heading/ui-heading-first";
 
-export function HomeHead({ onOpenModal }) {
+export function HomeHead() {
     return (
         <UiSectionWrapper
             className={`
@@ -17,12 +19,8 @@ export function HomeHead({ onOpenModal }) {
                     Переводи текст <br /> в играх или приложениях в реальном
                     времени
                 </UiHeadingFirst>
-                <Button
-                    type="button"
-                    onClick={() => onOpenModal("register")}
-                    className="w-max"
-                >
-                    Регистрация
+                <Button asChild type="button" className="w-max">
+                    <Link href="/?auth=register">Регистрация</Link>
                 </Button>
             </UiDivContainer>
         </UiSectionWrapper>

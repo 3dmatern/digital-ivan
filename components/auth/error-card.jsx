@@ -2,13 +2,12 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 import { CardWrapper } from "@/components/auth/cardWrapper";
 
-export function ErrorCard({ onClickBackButton, onCloseModal }) {
+export function ErrorCard() {
     return (
         <CardWrapper
             headerLabel="Упс! Что-то пошло не так!"
             backButtonLabel="Вход"
-            onClickBackButton={() => onClickBackButton("login")}
-            onCloseModal={onCloseModal}
+            backButtonHref="/?auth=login"
         >
             <div className="w-full flex justify-center items-center">
                 <ExclamationTriangleIcon className="text-destructive" />

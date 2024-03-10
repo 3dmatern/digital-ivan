@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 import { UiMainContainer } from "@/components/uikit/ui-main-container";
 import {
     AccountHead,
@@ -11,10 +13,16 @@ export const metadata = {
 };
 
 export default async function AccountAppPage() {
+    const username = cookies().get("username")?.value;
+    const subscriptionEnd = cookies().get("subscriptionEnd")?.value;
+
     return (
         <UiMainContainer>
             <AccountHead />
-            <AccountInfo />
+            <AccountInfo
+                username={username}
+                subscriptionEnd={subscriptionEnd}
+            />
             <AccountSubscribe />
         </UiMainContainer>
     );

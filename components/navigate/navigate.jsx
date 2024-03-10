@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { useAuth } from "@/contexts/auth-context";
+import { useAuthNavigate } from "@/contexts/auth-navigate-context";
 
 import { UiHeader } from "@/components/uikit/ui-header";
 import { Logo } from "@/components/logo";
@@ -12,10 +12,8 @@ import { UiMenuIcon } from "@/components/uikit/icons/ui-menu-icon";
 import { UiCrossIcon } from "@/components/uikit/icons/ui-cross-icon";
 import { AuthNavigate } from "@/components/auth/auth-navigate";
 
-export function Navigate() {
+export function Navigate({ isAuth }) {
     const {
-        user,
-        onLogout,
         verifiedToken,
         resetToken,
         isActiveMobMenu,
@@ -25,7 +23,7 @@ export function Navigate() {
         onCloseMenu,
         onOpenModal,
         onCloseModal,
-    } = useAuth();
+    } = useAuthNavigate();
 
     return (
         <UiHeader
@@ -69,14 +67,13 @@ export function Navigate() {
                         <AuthNavigate
                             verifiedToken={verifiedToken}
                             resetToken={resetToken}
-                            isAuth={user}
+                            isAuth={isAuth}
                             isActive={isActiveMobMenu}
                             typeForm={typeForm}
                             isOpen={isOpen}
                             onOpenModal={onOpenModal}
                             onCloseModal={onCloseModal}
                             onCloseMenu={onCloseMenu}
-                            onLogout={onLogout}
                         />
                     </AuthLinks>
                 }

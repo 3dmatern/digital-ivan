@@ -15,7 +15,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function ResetForm({ onClickBackButton, onCloseModal }) {
+export function ResetForm() {
     const [captcha, setCaptcha] = useState(undefined);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -45,8 +45,7 @@ export function ResetForm({ onClickBackButton, onCloseModal }) {
         <CardWrapper
             headerLabel="Забыли свой пароль?"
             backButtonLabel="Вход"
-            onClickBackButton={() => onClickBackButton("login")}
-            onCloseModal={onCloseModal}
+            backButtonHref="/?auth=login"
         >
             <Form {...form}>
                 <form

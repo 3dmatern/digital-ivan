@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 
-export function BackButton({ href, label, onClick }) {
+export function BackButton({ href, label, className }) {
     return (
         <Button
             variant="link"
-            className="font-normal w-full"
+            className={cn("font-normal w-full", className)}
             size="sm"
-            onClick={onClick}
             asChild
         >
             <Link href={href}>{label}</Link>

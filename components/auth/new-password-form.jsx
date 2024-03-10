@@ -14,11 +14,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function NewPasswordForm({
-    resetToken,
-    onClickBackButton,
-    onCloseModal,
-}) {
+export function NewPasswordForm({ resetToken }) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -46,8 +42,7 @@ export function NewPasswordForm({
         <CardWrapper
             headerLabel="Введите новый пароль"
             backButtonLabel="Вход"
-            onClickBackButton={() => onClickBackButton("login")}
-            onCloseModal={onCloseModal}
+            backButtonHref="/?auth=login"
         >
             <Form {...form}>
                 <form

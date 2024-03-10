@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 import httpService from "@/services/http-service";
 
 export const createSubscribe = async ({ accessToken, subscriptionPeriod }) => {
@@ -53,10 +55,11 @@ export const subscribeExtend = async (accessToken) => {
             generateHeaders(accessToken)
         );
 
+        cookies().set("username", username);
+        cookies().set("subscriptionEnd", subscription_end);
+
         return {
             success: data.message,
-            username,
-            subscriptionEnd: subscription_end,
         };
     } catch (error) {
         console.error("actions subscribe: ", error);
@@ -79,10 +82,12 @@ export const subscribeExtend = async (accessToken) => {
     }
 };
 
-function generateHeaders(token) {
+function generateHeaders() {
+    const accessToken = cookies().get("accessToken")?.value;
+
     return {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
         },
     };

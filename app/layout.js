@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
@@ -21,6 +22,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+    const accessToken = cookies().get("accessToken")?.value;
+
     return (
         <html lang="ru">
             <body
@@ -30,7 +33,7 @@ export default async function RootLayout({ children }) {
                 )}
             >
                 <Providers>
-                    <Navigate />
+                    <Navigate isAuth={!!accessToken} />
                     {children}
                     <Footer />
                     <div id="modals" />

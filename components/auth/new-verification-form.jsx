@@ -8,11 +8,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function NewVerificationForm({
-    verifiedToken,
-    onClickBackButton,
-    onCloseModal,
-}) {
+export function NewVerificationForm({ verifiedToken }) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
@@ -42,8 +38,7 @@ export function NewVerificationForm({
         <CardWrapper
             headerLabel="Подтверждение Email"
             backButtonLabel="Вход"
-            onClickBackButton={() => onClickBackButton("login")}
-            onCloseModal={onCloseModal}
+            backButtonHref="/?auth=login"
         >
             <div className="flex items-center justify-center w-full">
                 {!success && !error && <BeatLoader />}

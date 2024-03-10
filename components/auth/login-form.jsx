@@ -3,27 +3,24 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/contexts/auth-context";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
-import localStorageService from "@/services/local-storage-service";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import { InputField } from "@/components/auth/ui/input-field";
+import { BackButton } from "./ui/back-button";
 
-export function LoginForm({ onClickBackButton, onCloseModal }) {
+export function LoginForm({ onCloseModal }) {
     const router = useRouter();
-    const { onSetUser } = useAuth();
 
     const [captcha, setCaptcha] = useState(undefined);
-    const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const [isPending, startTransition] = useTransition();
 
@@ -37,7 +34,6 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
 
     const onSubmit = (values) => {
         if (captcha) {
-            setSuccess("");
             setError("");
 
             startTransition(async () => {
@@ -49,23 +45,12 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                 }
 
                 if (data?.success) {
-                    setSuccess(data?.success);
-                    onSetUser({
-                        username: data.username,
-                        subscriptionEnd: data.subscriptionEnd,
-                    });
-                    localStorageService.setTokens({
-                        username: data.username,
-                        subscriptionEnd: data.subscriptionEnd,
-                        accessToken: data.accessToken,
-                        expiresIn: data.expiresIn,
-                    });
                     form.resetField("username");
                     form.resetField("password");
 
                     onCloseModal();
 
-                    router.push("/account");
+                    router.push(DEFAULT_LOGIN_REDIRECT);
                 }
             });
         }
@@ -75,8 +60,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
         <CardWrapper
             headerLabel="Вход"
             backButtonLabel="Ещё нет аккаунта?"
-            onClickBackButton={() => onClickBackButton("register")}
-            onCloseModal={onCloseModal}
+            backButtonHref="/?auth=register"
         >
             <Form {...form}>
                 <form
@@ -100,20 +84,13 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                         isPending={isPending}
                         placeholder="******"
                         forgotPassword={
-                            <Button
-                                size="sm"
-                                variant="link"
-                                onClick={() =>
-                                    onClickBackButton("reset-password")
-                                }
-                                className="px-0 font-normal"
-                            >
-                                Забыли пароль?
-                            </Button>
+                            <BackButton
+                                href="/?auth=reset-password"
+                                label="Забыли пароль?"
+                            />
                         }
                         error={form.formState.errors["password"]}
                     />
-                    <FormSuccess message={success} />
                     <FormError message={error} />
                     <ReCAPTCHA
                         sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}

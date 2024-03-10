@@ -4,7 +4,6 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 
 import { subscribeExtend } from "@/actions/subscribe";
-import { useAuth } from "@/contexts/auth-context";
 
 import { Button } from "@/components/ui/button";
 import { UiHeadingFourth } from "@/components/uikit/heading";
@@ -12,12 +11,10 @@ import { UiDivContainer } from "@/components/uikit/ui-div-container";
 import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 import { UiLink } from "@/components/uikit/ui-link";
 import { UiDivider } from "@/components/uikit/ui-divider";
-import localStorageService from "@/services/local-storage-service";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export function AccountInfo() {
-    const { user, onSetUser } = useAuth();
+export function AccountInfo({ username, subscriptionEnd }) {
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
@@ -27,8 +24,7 @@ export function AccountInfo() {
         setError("");
 
         startTransition(async () => {
-            const accessToken = localStorageService.getAccessToken();
-            const data = await subscribeExtend(accessToken);
+            const data = await subscribeExtend();
 
             if (data?.error) {
                 setError(data.error);
@@ -36,12 +32,6 @@ export function AccountInfo() {
 
             if (data?.success) {
                 setSuccess(data.success);
-                localStorageService.setSubscriptionEnd(data.subscriptionEnd);
-                onSetUser({
-                    ...user,
-                    username: data.username,
-                    subscriptionEnd: data.subscriptionEnd,
-                });
             }
         });
     };
@@ -51,8 +41,8 @@ export function AccountInfo() {
             <UiDivContainer className="pt-6 pb-14 lg:pt-10 lg:pb-[158px]">
                 <AccountInfoBody>
                     <AccountInfoUser
-                        username={user?.username}
-                        subscriptionEnd={user?.subscriptionEnd}
+                        username={username}
+                        subscriptionEnd={subscriptionEnd}
                         isPending={isPending}
                         onSubscribeExtend={handleSubscribeExtend}
                         success={success}

@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 import { LoginSchema } from "@/schemas";
 import { encodeStringInBase64 } from "@/utils/encodeStringInBase64";
 import httpService from "@/services/http-service";
@@ -34,12 +36,13 @@ export const login = async (values) => {
 
         const { sub, exp } = await parseToken(data.access_token);
 
+        cookies().set("username", sub);
+        cookies().set("subscriptionEnd", data.subscription_end);
+        cookies().set("accessToken", data.access_token);
+        cookies().set("expiresIn", exp);
+
         return {
-            success: data.message,
-            username: sub,
-            subscriptionEnd: data.subscription_end,
-            accessToken: data.access_token,
-            expiresIn: exp,
+            success: true,
         };
     } catch (error) {
         console.error("actions login: ", error);
