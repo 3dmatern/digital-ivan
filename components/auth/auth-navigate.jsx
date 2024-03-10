@@ -38,7 +38,7 @@ export function AuthNavigate({
 
     return (
         <>
-            <UiModal isOpen={isOpen} onClose={onCloseModal}>
+            <UiModal isOpen={isOpen} onClose={() => onCloseModal()}>
                 {getContentModal()}
             </UiModal>
 

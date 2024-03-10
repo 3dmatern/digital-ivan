@@ -1,11 +1,12 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const AuthNavigateContext = createContext();
 
 export function AuthNavigateProvider({ children }) {
+    const router = useRouter();
     const searchParams = useSearchParams();
 
     const authParam = searchParams.get("auth");
@@ -58,7 +59,10 @@ export function AuthNavigateProvider({ children }) {
         setIsModal((prev) => ({ ...prev, isOpen: true, typeForm: type }));
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = (isBackRoute = true) => {
+        if (isBackRoute) {
+            router.back();
+        }
         setIsModal((prev) => ({ ...prev, isOpen: false, typeForm: null }));
     };
 

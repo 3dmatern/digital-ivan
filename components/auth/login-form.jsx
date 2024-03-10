@@ -48,7 +48,7 @@ export function LoginForm({ onCloseModal }) {
                     form.resetField("username");
                     form.resetField("password");
 
-                    onCloseModal();
+                    onCloseModal(false);
 
                     router.push(DEFAULT_LOGIN_REDIRECT);
                 }
