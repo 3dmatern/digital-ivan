@@ -42,6 +42,8 @@ export const login = async (values) => {
             expiresIn: exp,
         };
     } catch (error) {
+        console.error("actions login: ", error);
+
         if (error?.code === "ERR_NETWORK") {
             return {
                 error: "Что-то пошло не так. Попробуйте позже",
@@ -53,5 +55,9 @@ export const login = async (values) => {
                 error: error?.response?.data?.message,
             };
         }
+
+        return {
+            error: "Что-то пошло не так. Попробуйте позже",
+        };
     }
 };

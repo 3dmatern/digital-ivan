@@ -39,7 +39,7 @@ export function AuthNavigateContextProvider({ children }) {
             setIsModal((prev) => ({
                 ...prev,
                 isOpen: true,
-                typeForm: "reset",
+                typeForm: "new-password",
             }));
         }
     }, [resetToken, verifiedToken]);

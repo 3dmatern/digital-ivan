@@ -17,6 +17,8 @@ export const newVerification = async (verifidToken) => {
             success: data?.message,
         };
     } catch (error) {
+        console.error("actions new-verification: ", error);
+
         if (error?.code === "ERR_NETWORK") {
             return {
                 error: "Что-то пошло не так. Попробуйте позже",

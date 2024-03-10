@@ -104,7 +104,7 @@ export function LoginForm({ onClickBackButton, onCloseModal }) {
                                 size="sm"
                                 variant="link"
                                 onClick={() =>
-                                    onClickBackButton("resetPassword")
+                                    onClickBackButton("reset-password")
                                 }
                                 className="px-0 font-normal"
                             >

@@ -1,9 +1,12 @@
 "use client";
 
+import { useState, useTransition } from "react";
+
 import { cn } from "@/lib/utils";
+import { createSubscribe } from "@/actions/subscribe";
+import localStorageService from "@/services/local-storage-service";
 
 import { SUBSCRIPTIONS_DATA } from "@/components/payment/constants";
-
 import {
     Carousel,
     CarouselContent,
@@ -11,11 +14,47 @@ import {
 } from "@/components/ui/carousel";
 import { UiHeadingFourth } from "@/components/uikit/heading";
 import { Button } from "@/components/ui/button";
-import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
-import { UiDivContainer } from "../uikit/ui-div-container";
-import Link from "next/link";
+import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
+import { UiDivContainer } from "@/components/uikit/ui-div-container";
+import { FormSuccess } from "@/components/auth/form-success";
+import { FormError } from "@/components/auth/form-error";
 
 export function PaymentCarousel() {
+    const [isPending, startTransition] = useTransition();
+    const [selectSubscribe, setSelectSubscribe] = useState(null);
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSelectSubscribe = (selectItem) => {
+        setSelectSubscribe((prev) => selectItem);
+    };
+
+    const handleSubmit = () => {
+        if (!selectSubscribe) return;
+
+        startTransition(async () => {
+            const accessToken = localStorageService.getAccessToken();
+            const data = await createSubscribe({
+                accessToken,
+                subscriptionPeriod: selectSubscribe,
+            });
+
+            if (data?.error) {
+                setError(data.error);
+            }
+
+            if (data?.success) {
+                setSuccess(data.success);
+                localStorageService.setSubscriptionEnd(data.subscriptionEnd);
+                onSetUser({
+                    ...user,
+                    username: data.username,
+                    subscriptionEnd: data.subscriptionEnd,
+                });
+            }
+        });
+    };
+
     return (
         <UiSectionWrapper>
             <UiDivContainer className="lg:pt-16 lg:pb-[30px]">
@@ -31,18 +70,25 @@ export function PaymentCarousel() {
                                 key={item.id}
                                 className="lg:pl-[30px] basis-auto md:basis-1/2 lg:basis-1/3"
                             >
-                                <PaymentCarouselCard item={item} />
+                                <PaymentCarouselCard
+                                    item={item}
+                                    onClick={handleSelectSubscribe}
+                                    isSelect={selectSubscribe}
+                                />
                             </CarouselItem>
                         ))}
                     </CarouselContent>
                 </Carousel>
+
+                <FormSuccess message={success} />
+                <FormError message={error} />
                 <Button
-                    asChild
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={isPending || !selectSubscribe}
                     className="max-w-[410px] w-full mx-auto mt-[30px] mb-[120px]"
                 >
-                    <Link href="#" target="_blank">
-                        Оплатить
-                    </Link>
+                    Оплатить
                 </Button>
             </UiDivContainer>
         </UiSectionWrapper>
@@ -73,9 +119,9 @@ function PaymentCarouselCard({ item, isSelect, onClick }) {
 
             <Button
                 type="button"
-                variant={!isSelect && "outline"}
+                variant={isSelect === item.months ? "outline" : "default"}
                 className="w-full"
-                onClick={() => onClick(item.period)}
+                onClick={() => onClick(item.months)}
             >
                 Выбрать
             </Button>
@@ -96,8 +142,8 @@ function UnderlineImage({ className }) {
             <path
                 d="M2 7.5C21.3985 3.72688 91.5564 -1.55548 217 7.5"
                 stroke="#3FA6A0"
-                stroke-width="4"
-                stroke-linecap="round"
+                strokeWidth="4"
+                strokeLinecap="round"
             />
         </svg>
     );

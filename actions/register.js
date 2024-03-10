@@ -36,6 +36,8 @@ export const register = async (values) => {
             success: data.message,
         };
     } catch (error) {
+        console.error("actions register: ", error);
+
         if (error?.code === "ERR_NETWORK") {
             return {
                 error: "Что-то пошло не так. Попробуйте позже",

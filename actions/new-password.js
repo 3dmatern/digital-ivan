@@ -1,6 +1,8 @@
-"use client";
+"use server";
 
 import { NewPasswordSchema } from "@/schemas";
+import { encodeStringInBase64 } from "@/utils/encodeStringInBase64";
+import httpService from "@/services/http-service";
 
 export const newPassword = async (values, resetToken) => {
     let token = resetToken.trim();
@@ -26,20 +28,31 @@ export const newPassword = async (values, resetToken) => {
     };
 
     try {
-        // const { data } = await httpService.post(
-        //     `reset_password/${token}`,
-        //     payload
-        // );
-        // console.log(data);
+        const { data } = await httpService.post(
+            `reset_password/${token}`,
+            payload
+        );
 
         return {
-            success: "Пароль успешно обновлен!",
+            success: data.message,
         };
     } catch (error) {
-        console.error(error);
+        console.error("actions newPassword: ", error);
+
+        if (error?.code === "ERR_NETWORK") {
+            return {
+                error: "Что-то пошло не так. Попробуйте позже",
+            };
+        }
+
+        if (error.code === "ERR_BAD_REQUEST") {
+            return {
+                error: error?.response?.data?.message,
+            };
+        }
 
         return {
-            error: error?.message,
+            error: "Что-то пошло не так. Попробуйте позже",
         };
     }
 };

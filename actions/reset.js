@@ -1,6 +1,8 @@
-"use client";
+"use server";
 
 import { ResetSchema } from "@/schemas";
+import httpService from "@/services/http-service";
+import { encodeStringInBase64 } from "@/utils/encodeStringInBase64";
 
 export const reset = async (values) => {
     const validatedFields = ResetSchema.safeParse(values);
@@ -20,22 +22,31 @@ export const reset = async (values) => {
     };
 
     try {
-        // const { data } = await httpService.post(
-        //     "request_reset_password",
-        //     payload
-        // );
-        // console.log(data);
-
-        console.log("http://localhost:3000/?reset=qwe");
+        const { data } = await httpService.post(
+            "request_reset_password",
+            payload
+        );
 
         return {
-            success: "Проверьте вашу почту",
+            success: data.message,
         };
     } catch (error) {
-        console.error(error);
+        console.error("actions reset: ", error);
+
+        if (error?.code === "ERR_NETWORK") {
+            return {
+                error: "Что-то пошло не так. Попробуйте позже",
+            };
+        }
+
+        if (error.code === "ERR_BAD_REQUEST") {
+            return {
+                error: error?.response?.data?.message,
+            };
+        }
 
         return {
-            error: error?.message,
+            error: "Что-то пошло не так. Попробуйте позже",
         };
     }
 };
