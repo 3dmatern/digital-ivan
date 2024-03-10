@@ -10,8 +10,7 @@ export const newVerification = async (verifidToken) => {
     }
 
     try {
-        const data = await httpService.get(`confirm/${token}`);
-        console.log(data);
+        const { data } = await httpService.get(`confirm/${token}`);
 
         return {
             success: data?.message,
