@@ -16,7 +16,7 @@ export const RegisterSchema = z
             .string()
             .trim()
             .min(8, {
-                message: "Минимум 8 смиволов",
+                message: "Минимум 8 символов",
             })
             .regex(LOWER_REGEXP, {
                 message: "Хотя бы одну букву в нижнем регистре",
@@ -28,7 +28,7 @@ export const RegisterSchema = z
                 message: "Хотя бы одну цифру",
             }),
         confirmPassword: z.string().trim().min(8, {
-            message: "Минимум 8 смиволов",
+            message: "Минимум 8 символов",
         }),
     })
     .refine(
