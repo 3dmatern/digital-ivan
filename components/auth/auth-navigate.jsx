@@ -96,24 +96,16 @@ export function AuthNavigate({
             ) : (
                 <>
                     <UiLink
-                        href="#"
+                        href="/?auth=register"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onOpenModal("register");
-                            onCloseMenu();
-                        }}
+                        onClick={onCloseMenu}
                     >
                         Регистрация
                     </UiLink>
                     <UiLink
-                        href="#"
+                        href="/?auth=login"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onOpenModal("login");
-                            onCloseMenu();
-                        }}
+                        onClick={onCloseMenu}
                     >
                         Вход
                     </UiLink>
