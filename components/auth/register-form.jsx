@@ -64,7 +64,7 @@ export function RegisterForm() {
                     <InputField
                         form={form}
                         name="email"
-                        label="Введите почту"
+                        label="Почта"
                         type="email"
                         isPending={isPending}
                         placeholder="jhon.doe@example.com"
@@ -74,7 +74,7 @@ export function RegisterForm() {
                     <InputField
                         form={form}
                         name="username"
-                        label="Введите имя пользователя"
+                        label="Имя пользователя"
                         type="text"
                         isPending={isPending}
                         error={form.formState.errors["username"]}
@@ -83,7 +83,7 @@ export function RegisterForm() {
                     <InputField
                         form={form}
                         name="password"
-                        label="Введите пароль"
+                        label="Пароль"
                         type="password"
                         isPending={isPending}
                         error={form.formState.errors["password"]}
