@@ -1,6 +1,6 @@
-import { UiHeadingFirst } from "../uikit/heading";
-import { UiDivContainer } from "../uikit/ui-div-container";
-import { UiSectionWrapper } from "../uikit/ui-section-wrapper";
+import { UiHeadingFirst } from "@/components/uikit/heading";
+import { UiDivContainer } from "@/components/uikit/ui-div-container";
+import { UiSectionWrapper } from "@/components/uikit/ui-section-wrapper";
 
 export function AccountHead() {
     return (

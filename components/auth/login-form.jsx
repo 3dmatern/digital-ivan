@@ -20,7 +20,7 @@ import { BackButton } from "./ui/back-button";
 export function LoginForm({ onCloseModal }) {
     const router = useRouter();
 
-    const [captcha, setCaptcha] = useState(undefined);
+    const [captcha, setCaptcha] = useState(null);
     const [error, setError] = useState("");
     const [isPending, startTransition] = useTransition();
 

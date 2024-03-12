@@ -16,7 +16,7 @@ import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
 export function ResetForm() {
-    const [captcha, setCaptcha] = useState(undefined);
+    const [captcha, setCaptcha] = useState(null);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();

@@ -20,6 +20,12 @@ export function AuthNavigate({
     onCloseModal,
     onCloseMenu,
 }) {
+    const handleLogout = (e) => {
+        e.preventDefault();
+        onCloseMenu();
+        logout();
+    };
+
     const getContentModal = () => {
         switch (typeForm) {
             case "register":
@@ -53,13 +59,9 @@ export function AuthNavigate({
                         Личный кабинет
                     </UiLink>
                     <UiLink
-                        href="#"
+                        href="/"
                         className={cn("font-bold", isActive && "text-2xl")}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onCloseMenu();
-                            logout();
-                        }}
+                        onClick={handleLogout}
                     >
                         Выйти
                     </UiLink>

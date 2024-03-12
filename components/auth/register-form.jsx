@@ -16,7 +16,7 @@ import { FormError } from "@/components/auth/form-error";
 import { InputField } from "@/components/auth/ui/input-field";
 
 export function RegisterForm() {
-    const [captcha, setCaptcha] = useState(undefined);
+    const [captcha, setCaptcha] = useState(null);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isPending, startTransition] = useTransition();

@@ -11,7 +11,7 @@ export const metadata = {
     title: "NIKO | Личный кабинет",
 };
 
-export default async function AccountAppPage() {
+export default function AccountPage() {
     const username = cookies().get("username")?.value;
     const subscriptionEnd = cookies().get("subscriptionEnd")?.value;
 
