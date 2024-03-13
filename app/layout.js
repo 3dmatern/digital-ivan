@@ -26,7 +26,7 @@ export const metadata = {
     },
 };
 
-export default async function RootLayout({ children }) {
+export default function RootLayout({ children }) {
     const accessToken = cookies().get("accessToken")?.value;
 
     return (
